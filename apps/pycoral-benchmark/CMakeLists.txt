@@ -65,6 +65,7 @@ set(DEPLOY_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/inference_benchmark.py:inference_benchmark.py"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/softmax_regression_benchmark.py:softmax_regression_benchmark.py"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/imprinting_benchmark.py:imprinting_benchmark.py"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/online_imprinting_benchmark.py:online_imprinting_benchmark.py"
 )
 foreach(model ${IMPRINTING_MODELS})
     list(APPEND DEPLOY_FILES
@@ -120,3 +121,9 @@ add_test(NAME imprinting
             "cd ${DEPLOY_DIR} && python3 imprinting_benchmark.py"
 )
 set_tests_properties(imprinting PROPERTIES LABELS "edgetpu;imprinting")
+
+add_test(NAME online-imprinting
+    COMMAND ${_CORAL_SCRIPTS_DIR}/run.sh
+            "cd ${DEPLOY_DIR} && python3 online_imprinting_benchmark.py"
+)
+set_tests_properties(online-imprinting PROPERTIES LABELS "edgetpu;imprinting")
