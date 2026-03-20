@@ -1,0 +1,32 @@
+name: PR Docs Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency: preview-${{ github.ref }}
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - if: github.event.action != 'closed'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - if: github.event.action != 'closed'
+        run: pip install -r requirements.txt
+
+      - if: github.event.action != 'closed'
+        run: mkdocs build --strict
+
+      - uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./site/
