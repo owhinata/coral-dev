@@ -25,15 +25,15 @@ Google Coral Dev Board 向けの組込みAI開発環境。
 
 ```bash
 # ビルド
-cmake -B apps/<app>/build -S apps/<app> \
+cmake -B build/<app> -S apps/<app> \
     -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
-cmake --build apps/<app>/build
+cmake --build build/<app>
 
 # デプロイ（ボードへ転送）
-cmake --build apps/<app>/build --target deploy
+cmake --build build/<app> --target deploy
 
 # リモート実行
-cmake --build apps/<app>/build --target run
+cmake --build build/<app> --target run
 ```
 
 ### ドキュメントのローカルビルド

@@ -85,8 +85,8 @@ ssh-copy-id mendel@<CORAL_IP>
 Once the environment is ready, proceed to build and deploy applications.
 
 ```bash
-cmake -B apps/<app>/build -S apps/<app> \
+cmake -B build/<app> -S apps/<app> \
     -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
-cmake --build apps/<app>/build
-cmake --build apps/<app>/build --target deploy
+cmake --build build/<app>
+cmake --build build/<app> --target deploy
 ```
