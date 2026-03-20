@@ -195,6 +195,7 @@ cmake -B build/pycoral-benchmark -S apps/pycoral-benchmark
 | `inference-cpu` | `cpu`, `inference` | ボード CPU 推論ベンチマーク |
 | `inference-cpu-local` | `cpu`, `inference`, `local` | 開発 PC CPU 推論ベンチマーク |
 | `softmax-regression` | `cpu`, `softmax-regression` | Softmax 回帰学習ベンチマーク |
+| `imprinting` | `edgetpu`, `imprinting` | Weight imprinting 学習ベンチマーク |
 
 ### 接続設定
 
@@ -255,3 +256,11 @@ CMake キャッシュ変数で接続先をカスタマイズできます:
     | 16 | 1024 | 6260.45 | 5.08% |
 
     ランダムデータでの学習のため、精度は低い値になります（正常な動作です）。
+
+=== "Imprinting"
+
+    ### Weight Imprinting 学習（ボード Edge TPU、10 カテゴリ × 20 画像）
+
+    | モデル | Training time (ms) |
+    |--------|--------------------|
+    | mobilenet_v1_1.0_224_l2norm_quant_edgetpu | 1057.06 |

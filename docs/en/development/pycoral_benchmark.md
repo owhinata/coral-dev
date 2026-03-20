@@ -195,6 +195,7 @@ cmake -B build/pycoral-benchmark -S apps/pycoral-benchmark
 | `inference-cpu` | `cpu`, `inference` | Board CPU inference benchmark |
 | `inference-cpu-local` | `cpu`, `inference`, `local` | Dev PC CPU inference benchmark |
 | `softmax-regression` | `cpu`, `softmax-regression` | Softmax regression training benchmark |
+| `imprinting` | `edgetpu`, `imprinting` | Weight imprinting training benchmark |
 
 ### Connection Settings
 
@@ -255,3 +256,11 @@ Customize connection parameters via CMake cache variables:
     | 16 | 1024 | 6260.45 | 5.08% |
 
     Accuracy is low because training uses random synthetic data (this is expected behavior).
+
+=== "Imprinting"
+
+    ### Weight Imprinting Training (Board Edge TPU, 10 categories x 20 images)
+
+    | Model | Training time (ms) |
+    |-------|--------------------|
+    | mobilenet_v1_1.0_224_l2norm_quant_edgetpu | 1057.06 |

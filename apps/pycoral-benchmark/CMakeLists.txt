@@ -14,7 +14,24 @@ set(MODELS
     ssd_mobilenet_v2_face_quant_postprocess
 )
 
+# Imprinting models (Edge TPU only)
+set(IMPRINTING_MODELS
+    mobilenet_v1_1.0_224_l2norm_quant
+)
+
 file(MAKE_DIRECTORY ${MODEL_DIR})
+
+# Download imprinting models
+foreach(model ${IMPRINTING_MODELS})
+    if(NOT EXISTS "${MODEL_DIR}/${model}_edgetpu.tflite")
+        message(STATUS "Downloading ${model}_edgetpu.tflite ...")
+        file(DOWNLOAD
+            "${MODEL_BASE_URL}/${model}_edgetpu.tflite"
+            "${MODEL_DIR}/${model}_edgetpu.tflite"
+            SHOW_PROGRESS
+        )
+    endif()
+endforeach()
 
 foreach(model ${MODELS})
     # CPU version
@@ -47,7 +64,13 @@ set(DEPLOY_DIR /home/mendel/work/pycoral-benchmark)
 set(DEPLOY_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/inference_benchmark.py:inference_benchmark.py"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/softmax_regression_benchmark.py:softmax_regression_benchmark.py"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/imprinting_benchmark.py:imprinting_benchmark.py"
 )
+foreach(model ${IMPRINTING_MODELS})
+    list(APPEND DEPLOY_FILES
+        "${MODEL_DIR}/${model}_edgetpu.tflite:${model}_edgetpu.tflite"
+    )
+endforeach()
 foreach(model ${MODELS})
     list(APPEND DEPLOY_FILES
         "${MODEL_DIR}/${model}.tflite:${model}.tflite"
@@ -91,3 +114,9 @@ add_test(NAME softmax-regression
             "cd ${DEPLOY_DIR} && python3 softmax_regression_benchmark.py"
 )
 set_tests_properties(softmax-regression PROPERTIES LABELS "cpu;softmax-regression")
+
+add_test(NAME imprinting
+    COMMAND ${_CORAL_SCRIPTS_DIR}/run.sh
+            "cd ${DEPLOY_DIR} && python3 imprinting_benchmark.py"
+)
+set_tests_properties(imprinting PROPERTIES LABELS "edgetpu;imprinting")
