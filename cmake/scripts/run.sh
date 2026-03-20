@@ -10,6 +10,7 @@
 set -euo pipefail
 
 CMD="$1"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 MDT_KEY="$HOME/.config/mdt/keys/mdt.key"
 if [ ! -f "$MDT_KEY" ]; then
@@ -18,24 +19,7 @@ if [ ! -f "$MDT_KEY" ]; then
     exit 1
 fi
 
-IP="${CORAL_IP:-}"
-
-# --- IP auto-detection via mdt ---
-if [ -z "$IP" ]; then
-    if ! command -v mdt &>/dev/null; then
-        echo "Error: mdt not found. Install: pip install mendel-development-tool" >&2
-        echo "  Or set: CORAL_IP=<ip>" >&2
-        exit 1
-    fi
-
-    IP=$(mdt devices 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
-    if [ -z "$IP" ]; then
-        echo "Error: No Coral device found via mdt." >&2
-        echo "  - Is the board connected via USB?" >&2
-        echo "  - Or set: CORAL_IP=<ip>" >&2
-        exit 1
-    fi
-fi
+IP=$("$SCRIPT_DIR/resolve-ip.sh")
 
 SSH_OPTS=(-i "$MDT_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=5)
 

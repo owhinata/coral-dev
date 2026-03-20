@@ -10,5 +10,8 @@ venv/
 # CMake out-of-source build
 build/
 
+# Coral device IP cache
+.coral-ip
+
 # OS
 .DS_Store
