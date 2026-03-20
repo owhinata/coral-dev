@@ -849,7 +849,68 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#cmake-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMake ターゲット / ctest 一覧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CMake ターゲット / ctest 一覧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        設定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ターゲット一覧
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ctest_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ctest 一覧
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        接続設定
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       
         実行結果
@@ -898,67 +959,6 @@
     <span class="md-ellipsis">
       
         Softmax 回帰学習（ボード CPU、500 SGD iterations）
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cmake-targets" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CMake ターゲット / ctest 一覧
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="CMake ターゲット / ctest 一覧">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        設定
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ターゲット一覧
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ctest_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ctest 一覧
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        接続設定
       
     </span>
   </a>
@@ -1263,7 +1263,82 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python3<span class="w"> </span>apps/pycoral-benchmark/src/inference_benchmark.py<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--device<span class="w"> </span>cpu<span class="w"> </span>--model-dir<span class="w"> </span>build/pycoral-benchmark/models
 </code></pre></div>
-<h2 id="_8">実行結果<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="cmake-targets">CMake ターゲット / ctest 一覧<a class="headerlink" href="#cmake-targets" title="Permanent link">&para;</a></h2>
+<h3 id="_8">設定<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build/pycoral-benchmark<span class="w"> </span>-S<span class="w"> </span>apps/pycoral-benchmark
+</code></pre></div>
+<h3 id="_9">ターゲット一覧<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ターゲット</th>
+<th>コマンド</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deploy</code></td>
+<td><code>cmake --build build/pycoral-benchmark --target deploy</code></td>
+<td>スクリプト + モデルをボードへ転送</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ctest_2">ctest 一覧<a class="headerlink" href="#ctest_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>テスト名</th>
+<th>ラベル</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inference-edgetpu</code></td>
+<td><code>edgetpu</code>, <code>inference</code></td>
+<td>Edge TPU 推論ベンチマーク</td>
+</tr>
+<tr>
+<td><code>inference-cpu</code></td>
+<td><code>cpu</code>, <code>inference</code></td>
+<td>ボード CPU 推論ベンチマーク</td>
+</tr>
+<tr>
+<td><code>inference-cpu-local</code></td>
+<td><code>cpu</code>, <code>inference</code>, <code>local</code></td>
+<td>開発 PC CPU 推論ベンチマーク</td>
+</tr>
+<tr>
+<td><code>softmax-regression</code></td>
+<td><code>cpu</code>, <code>softmax-regression</code></td>
+<td>Softmax 回帰学習ベンチマーク</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_10">接続設定<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>CMake キャッシュ変数で接続先をカスタマイズできます:</p>
+<table>
+<thead>
+<tr>
+<th>変数</th>
+<th>デフォルト</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CORAL_IP</code></td>
+<td>(空 = mdt で自動検出)</td>
+<td>Coral Dev Board の IP アドレス</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_11">実行結果<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Inference</label><label for="__tabbed_1_2">Softmax Regression</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <h3 id="edge-tpu200-iterations">Edge TPU（ボード、200 iterations）<a class="headerlink" href="#edge-tpu200-iterations" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1433,6 +1508,8 @@
 </tr>
 </tbody>
 </table>
+</div>
+<div class="tabbed-block">
 <h3 id="softmax-cpu500-sgd-iterations">Softmax 回帰学習（ボード CPU、500 SGD iterations）<a class="headerlink" href="#softmax-cpu500-sgd-iterations" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1471,78 +1548,9 @@
 </tbody>
 </table>
 <p>ランダムデータでの学習のため、精度は低い値になります（正常な動作です）。</p>
-<hr />
-<h2 id="cmake-targets">CMake ターゲット / ctest 一覧<a class="headerlink" href="#cmake-targets" title="Permanent link">&para;</a></h2>
-<h3 id="_9">設定<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build/pycoral-benchmark<span class="w"> </span>-S<span class="w"> </span>apps/pycoral-benchmark
-</code></pre></div>
-<h3 id="_10">ターゲット一覧<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>ターゲット</th>
-<th>コマンド</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>deploy</code></td>
-<td><code>cmake --build build/pycoral-benchmark --target deploy</code></td>
-<td>スクリプト + モデルをボードへ転送</td>
-</tr>
-</tbody>
-</table>
-<h3 id="ctest_2">ctest 一覧<a class="headerlink" href="#ctest_2" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>テスト名</th>
-<th>ラベル</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>inference-edgetpu</code></td>
-<td><code>edgetpu</code>, <code>inference</code></td>
-<td>Edge TPU 推論ベンチマーク</td>
-</tr>
-<tr>
-<td><code>inference-cpu</code></td>
-<td><code>cpu</code>, <code>inference</code></td>
-<td>ボード CPU 推論ベンチマーク</td>
-</tr>
-<tr>
-<td><code>inference-cpu-local</code></td>
-<td><code>cpu</code>, <code>inference</code>, <code>local</code></td>
-<td>開発 PC CPU 推論ベンチマーク</td>
-</tr>
-<tr>
-<td><code>softmax-regression</code></td>
-<td><code>cpu</code>, <code>softmax-regression</code></td>
-<td>Softmax 回帰学習ベンチマーク</td>
-</tr>
-</tbody>
-</table>
-<h3 id="_11">接続設定<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
-<p>CMake キャッシュ変数で接続先をカスタマイズできます:</p>
-<table>
-<thead>
-<tr>
-<th>変数</th>
-<th>デフォルト</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>CORAL_IP</code></td>
-<td>(空 = mdt で自動検出)</td>
-<td>Coral Dev Board の IP アドレス</td>
-</tr>
-</tbody>
-</table>
+</div>
+</div>
+</div>
 
 
 
