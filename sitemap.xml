@@ -22,6 +22,13 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/development/hello_world/"/>
     </url>
     <url>
+        <loc>https://owhinata.github.io/coral-dev/development/pycoral_benchmark/</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/development/pycoral_benchmark/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/development/pycoral_benchmark/"/>
+    </url>
+    <url>
         <loc>https://owhinata.github.io/coral-dev/setup/getting_started/</loc>
         <lastmod>2026-03-20</lastmod>
         <changefreq>daily</changefreq>
@@ -62,6 +69,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/development/hello_world/"/>
         <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/development/hello_world/"/>
+    </url>
+    <url>
+        <loc>https://owhinata.github.io/coral-dev/en/development/pycoral_benchmark/</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/development/pycoral_benchmark/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/development/pycoral_benchmark/"/>
     </url>
     <url>
         <loc>https://owhinata.github.io/coral-dev/en/setup/getting_started/</loc>
