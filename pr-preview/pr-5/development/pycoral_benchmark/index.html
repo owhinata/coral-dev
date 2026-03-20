@@ -976,6 +976,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#imprinting-edge-tpu10-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オンライン Imprinting 推論（ボード Edge TPU、10 カテゴリ × 20 画像）
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1331,6 +1342,11 @@
 <td><code>edgetpu</code>, <code>imprinting</code></td>
 <td>Weight imprinting 学習ベンチマーク</td>
 </tr>
+<tr>
+<td><code>online-imprinting</code></td>
+<td><code>edgetpu</code>, <code>imprinting</code></td>
+<td>オンライン imprinting 推論ベンチマーク</td>
+</tr>
 </tbody>
 </table>
 <h3 id="_10">接続設定<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
@@ -1578,6 +1594,22 @@
 <tr>
 <td>mobilenet_v1_1.0_224_l2norm_quant_edgetpu</td>
 <td>1057.06</td>
+</tr>
+</tbody>
+</table>
+<h3 id="imprinting-edge-tpu10-20">オンライン Imprinting 推論（ボード Edge TPU、10 カテゴリ × 20 画像）<a class="headerlink" href="#imprinting-edge-tpu10-20" title="Permanent link">&para;</a></h3>
+<p>各カテゴリの学習後にモデルを再構築し推論を実行。合計推論時間を計測。</p>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>Inference time (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mobilenet_v1_1.0_224_l2norm_quant_edgetpu</td>
+<td>248.89</td>
 </tr>
 </tbody>
 </table>

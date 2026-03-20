@@ -976,6 +976,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#online-imprinting-inference-board-edge-tpu-10-categories-x-20-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Online Imprinting Inference (Board Edge TPU, 10 categories x 20 images)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1331,6 +1342,11 @@
 <td><code>edgetpu</code>, <code>imprinting</code></td>
 <td>Weight imprinting training benchmark</td>
 </tr>
+<tr>
+<td><code>online-imprinting</code></td>
+<td><code>edgetpu</code>, <code>imprinting</code></td>
+<td>Online imprinting inference benchmark</td>
+</tr>
 </tbody>
 </table>
 <h3 id="connection-settings">Connection Settings<a class="headerlink" href="#connection-settings" title="Permanent link">&para;</a></h3>
@@ -1578,6 +1594,22 @@
 <tr>
 <td>mobilenet_v1_1.0_224_l2norm_quant_edgetpu</td>
 <td>1057.06</td>
+</tr>
+</tbody>
+</table>
+<h3 id="online-imprinting-inference-board-edge-tpu-10-categories-x-20-images">Online Imprinting Inference (Board Edge TPU, 10 categories x 20 images)<a class="headerlink" href="#online-imprinting-inference-board-edge-tpu-10-categories-x-20-images" title="Permanent link">&para;</a></h3>
+<p>After training each category, the model is rebuilt and one inference is performed. Total inference time is reported.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Inference time (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mobilenet_v1_1.0_224_l2norm_quant_edgetpu</td>
+<td>248.89</td>
 </tr>
 </tbody>
 </table>
