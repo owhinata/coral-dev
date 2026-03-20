@@ -107,6 +107,19 @@ cmake --build build/<app> --target deploy
 cmake --build build/<app> --target run
 ```
 
+## ボードへのアクセス (`cmake/scripts/`)
+
+ボード上でのコマンド実行やファイル転送には `cmake/scripts/` のスクリプトを使用する。
+`mdt exec` や生の `ssh` / `scp` は使わない。
+
+```bash
+# ボード上でコマンド実行
+cmake/scripts/run.sh '<command>'
+
+# ファイル転送（CMake deploy ターゲット経由）
+cmake --build build/<app> --target deploy
+```
+
 ## Coral Dev Board 固有の注意点
 
 ### Edge TPU ランタイム
