@@ -8,6 +8,13 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/"/>
     </url>
     <url>
+        <loc>https://owhinata.github.io/coral-dev/development/coremark/</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/development/coremark/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/development/coremark/"/>
+    </url>
+    <url>
         <loc>https://owhinata.github.io/coral-dev/development/hello_world/</loc>
         <lastmod>2026-03-20</lastmod>
         <changefreq>daily</changefreq>
@@ -34,6 +41,13 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/"/>
         <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/"/>
+    </url>
+    <url>
+        <loc>https://owhinata.github.io/coral-dev/en/development/coremark/</loc>
+        <lastmod>2026-03-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/development/coremark/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/development/coremark/"/>
     </url>
     <url>
         <loc>https://owhinata.github.io/coral-dev/en/development/hello_world/</loc>
