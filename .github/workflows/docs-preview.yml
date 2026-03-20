@@ -25,9 +25,9 @@ jobs:
         run: pip install -r requirements.txt
 
       - if: github.event.action != 'closed'
-        run: >
+        run: |
+          sed -i "s|^site_url:.*|site_url: https://owhinata.github.io/coral-dev/pr-preview/pr-${{ github.event.number }}/|" mkdocs.yml
           mkdocs build --strict
-          --site-url "https://owhinata.github.io/coral-dev/pr-preview/pr-${{ github.event.number }}/"
 
       - uses: rossjrw/pr-preview-action@v1
         with:
