@@ -27,7 +27,7 @@ This repository provides a development environment for the Coral Dev Board.
 ```bash
 # Build
 cmake -B build/<app> -S apps/<app> \
-    -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
+    -DCMAKE_TOOLCHAIN_FILE=$(pwd)/cmake/toolchain-coral-aarch64.cmake
 cmake --build build/<app>
 
 # Deploy & Run

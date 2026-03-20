@@ -13,7 +13,7 @@ Embedded AI development environment for the Google Coral Dev Board.
 
 ## Documentation
 
-See the [Coral Dev Board Guide](https://owhinata.github.io/coral-dev/) for details.
+See the [Coral Dev Board Guide](https://owhinata.github.io/coral-dev/en/) for details.
 
 ## Quick Start
 
@@ -38,7 +38,7 @@ python3 -m venv .venv
 ```bash
 # Build
 cmake -B build/<app> -S apps/<app> \
-    -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
+    -DCMAKE_TOOLCHAIN_FILE=$(pwd)/cmake/toolchain-coral-aarch64.cmake
 cmake --build build/<app>
 
 # Deploy to board

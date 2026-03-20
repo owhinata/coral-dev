@@ -53,7 +53,7 @@ coral_add_run_target(
 
 ```bash
 cmake -B build/hello_world -S apps/hello_world \
-    -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
+    -DCMAKE_TOOLCHAIN_FILE=$(pwd)/cmake/toolchain-coral-aarch64.cmake
 cmake --build build/hello_world
 ```
 
