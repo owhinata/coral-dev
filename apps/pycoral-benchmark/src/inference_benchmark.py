@@ -1,10 +1,37 @@
-#!/usr/bin/env python3
+# Lint as: python3
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 """Inference benchmark for TFLite models on Edge TPU and CPU.
 
 Measures per-model inference latency. Supports Edge TPU (via pycoral) and
 CPU-only (via tflite-runtime) execution modes.
 
 Based on: https://github.com/google-coral/pycoral/blob/master/benchmarks/inference_benchmarks.py
+
+Differences from the original:
+  - CPU mode: --device cpu runs with tflite_runtime (or ai_edge_litert)
+    only, so pycoral is not required on the host.
+  - Interpreter creation: each model creates its own interpreter via
+    make_interpreter() instead of sharing a single delegate instance.
+    A warmup invoke is run before measurement, so delegate/model load
+    cost does not affect the results.
+  - Timing: uses time.perf_counter() per invoke instead of timeit.timeit()
+    to collect per-iteration times and report mean/std/min/max.
+  - Input data: fills all input tensors based on their dtype (float or int)
+    instead of only the first tensor with uint8.
+  - Self-contained: no dependency on benchmark_utils; models are discovered
+    from --model-dir and no CSV / reference comparison is performed.
 """
 
 import argparse
