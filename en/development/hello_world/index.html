@@ -782,13 +782,13 @@ Use this to verify the cross-compile, deploy, and run workflow.</p>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nb">include</span><span class="p">(</span><span class="o">${</span><span class="nv">CMAKE_CURRENT_LIST_DIR</span><span class="o">}</span><span class="s">/../../cmake/coral-deploy.cmake</span><span class="p">)</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="nb">coral_add_deploy_target</span><span class="p">(</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="s">DEPLOY_DIR</span><span class="w"> </span><span class="s">/home/mendel/hello_world</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="s">DEPLOY_DIR</span><span class="w"> </span><span class="s">/home/mendel/work/hello_world</span>
 <a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="s">DEPENDS</span><span class="w"> </span><span class="s">hello_world</span>
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="s">FILES</span><span class="w"> </span><span class="s2">&quot;$&lt;TARGET_FILE:hello_world&gt;:hello_world&quot;</span>
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">)</span>
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="nb">coral_add_run_target</span><span class="p">(</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">/home/mendel/hello_world/hello_world</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">/home/mendel/work/hello_world/hello_world</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="p">)</span>
 </code></pre></div>
 <p>Including <code>coral-deploy.cmake</code> adds the <code>deploy</code> and <code>run</code> targets.</p>
