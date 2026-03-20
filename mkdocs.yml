@@ -53,6 +53,7 @@ nav:
       - setup/sd_home.md
   - 開発:
       - development/hello_world.md
+      - development/coremark.md
 
 markdown_extensions:
   - admonition
