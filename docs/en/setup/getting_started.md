@@ -23,10 +23,15 @@ Follow the official documentation to flash Mendel Linux:
 ## 2. Install MDT
 
 Install the Mendel Development Tool (mdt) on your host PC.
+Create a virtual environment in the project root and install the dependencies.
 
 ```bash
-pip install mendel-development-tool
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 ```
+
+!!! tip "PATH Setup"
+    Either add `.venv/bin` to your PATH, or run tools with their full path like `.venv/bin/mdt`.
 
 ## 3. Connect to the Board
 
@@ -39,6 +44,10 @@ mdt devices
 # Access the shell
 mdt shell
 ```
+
+!!! note "Automatic SSH Key Management"
+    mdt automatically generates an SSH key on first connection and stores it at `~/.config/mdt/keys/mdt.key`.
+    The deploy scripts also use this key, so no manual SSH key setup is required.
 
 ## 4. Network Configuration
 
@@ -54,39 +63,15 @@ ip addr show wlan0
 
 ## 5. Install the Cross-Compiler
 
-Install the aarch64 cross-compiler on your host PC.
-
-=== "Ubuntu / Debian"
-
-    ```bash
-    sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
-    ```
-
-=== "Arch Linux"
-
-    ```bash
-    sudo pacman -S aarch64-linux-gnu-gcc
-    ```
-
-## 6. Set Up SSH Keys
-
-Configure SSH keys for password-less deployment.
+Install ARM GNU Toolchain 8.3 that matches the Coral Dev Board's Mendel Linux
+(Debian 10 Buster, glibc 2.28) using the setup script.
 
 ```bash
-# Check Coral IP
-mdt devices
-
-# Copy SSH key
-ssh-copy-id mendel@<CORAL_IP>
+./cmake/setup-toolchain.sh
 ```
+
+The toolchain is downloaded and extracted into the `toolchain/` directory.
 
 ## Next Steps
 
-Once the environment is ready, proceed to build and deploy applications.
-
-```bash
-cmake -B build/<app> -S apps/<app> \
-    -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
-cmake --build build/<app>
-cmake --build build/<app> --target deploy
-```
+Once the environment is ready, try building and deploying with [Hello World](../development/hello_world.md).

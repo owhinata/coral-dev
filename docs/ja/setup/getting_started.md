@@ -23,10 +23,15 @@ Coral Dev Board の初期セットアップ手順です。
 ## 2. MDT のインストール
 
 ホスト PC に Mendel Development Tool (mdt) をインストールします。
+プロジェクトルートで仮想環境を作成し、依存パッケージをインストールしてください。
 
 ```bash
-pip install mendel-development-tool
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
 ```
+
+!!! tip "PATH の設定"
+    `.venv/bin` にパスを通すか、`.venv/bin/mdt` のようにフルパスで実行してください。
 
 ## 3. ボードへの接続
 
@@ -39,6 +44,10 @@ mdt devices
 # シェルアクセス
 mdt shell
 ```
+
+!!! note "SSH 鍵の自動管理"
+    mdt は初回接続時に SSH 鍵を自動生成し、`~/.config/mdt/keys/mdt.key` に保存します。
+    デプロイスクリプトもこの鍵を利用するため、手動での SSH 鍵設定は不要です。
 
 ## 4. ネットワーク設定
 
@@ -54,39 +63,15 @@ ip addr show wlan0
 
 ## 5. クロスコンパイラのインストール
 
-ホスト PC に aarch64 クロスコンパイラをインストールします。
-
-=== "Ubuntu / Debian"
-
-    ```bash
-    sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
-    ```
-
-=== "Arch Linux"
-
-    ```bash
-    sudo pacman -S aarch64-linux-gnu-gcc
-    ```
-
-## 6. SSH 鍵の設定
-
-パスワードなしでデプロイできるよう SSH 鍵を設定します。
+Coral Dev Board の Mendel Linux (Debian 10 Buster, glibc 2.28) に合わせた
+ARM GNU Toolchain 8.3 をセットアップスクリプトでインストールします。
 
 ```bash
-# Coral の IP を確認
-mdt devices
-
-# SSH 鍵をコピー
-ssh-copy-id mendel@<CORAL_IP>
+./cmake/setup-toolchain.sh
 ```
+
+ツールチェーンは `toolchain/` ディレクトリにダウンロード・展開されます。
 
 ## 次のステップ
 
-環境が整ったら、アプリケーションのビルド・デプロイに進みます。
-
-```bash
-cmake -B build/<app> -S apps/<app> \
-    -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
-cmake --build build/<app>
-cmake --build build/<app> --target deploy
-```
+環境が整ったら、[Hello World](../development/hello_world.md) でビルド・デプロイを試しましょう。
