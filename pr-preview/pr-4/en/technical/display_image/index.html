@@ -985,8 +985,9 @@ Provides GUI controls (zoom, rotate, color adjustment, etc.) with the shortest c
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>imagemagick
 </code></pre></div>
 <h3 id="command_1">Command<a class="headerlink" href="#command_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">DISPLAY</span><span class="o">=</span>:0<span class="w"> </span>display<span class="w"> </span>&lt;file&gt;
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">DISPLAY</span><span class="o">=</span>:0<span class="w"> </span>display<span class="w"> </span>-geometry<span class="w"> </span>+0+0<span class="w"> </span>&lt;file&gt;
 </code></pre></div>
+<p>Without <code>-geometry +0+0</code>, the window may be placed at the bottom of the screen, causing the image to be clipped.</p>
 <h2 id="method-3-opencv-python3-opencv">Method 3: OpenCV (python3-opencv)<a class="headerlink" href="#method-3-opencv-python3-opencv" title="Permanent link">&para;</a></h2>
 <p>Displays via XWayland. No need to stop Weston.
 Useful for combining inference result rendering (rectangles, text, etc.) and display in a single library.</p>
