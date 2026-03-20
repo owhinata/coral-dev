@@ -965,6 +965,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#weight-imprinting-edge-tpu10-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weight Imprinting 学習（ボード Edge TPU、10 カテゴリ × 20 画像）
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1315,6 +1326,11 @@
 <td><code>cpu</code>, <code>softmax-regression</code></td>
 <td>Softmax 回帰学習ベンチマーク</td>
 </tr>
+<tr>
+<td><code>imprinting</code></td>
+<td><code>edgetpu</code>, <code>imprinting</code></td>
+<td>Weight imprinting 学習ベンチマーク</td>
+</tr>
 </tbody>
 </table>
 <h3 id="_10">接続設定<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
@@ -1336,7 +1352,7 @@
 </tbody>
 </table>
 <h2 id="_11">実行結果<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Inference</label><label for="__tabbed_1_2">Softmax Regression</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Inference</label><label for="__tabbed_1_2">Softmax Regression</label><label for="__tabbed_1_3">Imprinting</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <h3 id="edge-tpu200-iterations">Edge TPU（ボード、200 iterations）<a class="headerlink" href="#edge-tpu200-iterations" title="Permanent link">&para;</a></h3>
@@ -1548,6 +1564,23 @@
 </tbody>
 </table>
 <p>ランダムデータでの学習のため、精度は低い値になります（正常な動作です）。</p>
+</div>
+<div class="tabbed-block">
+<h3 id="weight-imprinting-edge-tpu10-20">Weight Imprinting 学習（ボード Edge TPU、10 カテゴリ × 20 画像）<a class="headerlink" href="#weight-imprinting-edge-tpu10-20" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>Training time (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mobilenet_v1_1.0_224_l2norm_quant_edgetpu</td>
+<td>1057.06</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>

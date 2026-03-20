@@ -965,6 +965,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#weight-imprinting-training-board-edge-tpu-10-categories-x-20-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weight Imprinting Training (Board Edge TPU, 10 categories x 20 images)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1315,6 +1326,11 @@
 <td><code>cpu</code>, <code>softmax-regression</code></td>
 <td>Softmax regression training benchmark</td>
 </tr>
+<tr>
+<td><code>imprinting</code></td>
+<td><code>edgetpu</code>, <code>imprinting</code></td>
+<td>Weight imprinting training benchmark</td>
+</tr>
 </tbody>
 </table>
 <h3 id="connection-settings">Connection Settings<a class="headerlink" href="#connection-settings" title="Permanent link">&para;</a></h3>
@@ -1336,7 +1352,7 @@
 </tbody>
 </table>
 <h2 id="benchmark-results">Benchmark Results<a class="headerlink" href="#benchmark-results" title="Permanent link">&para;</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Inference</label><label for="__tabbed_1_2">Softmax Regression</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Inference</label><label for="__tabbed_1_2">Softmax Regression</label><label for="__tabbed_1_3">Imprinting</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <h3 id="edge-tpu-board-200-iterations">Edge TPU (Board, 200 iterations)<a class="headerlink" href="#edge-tpu-board-200-iterations" title="Permanent link">&para;</a></h3>
@@ -1548,6 +1564,23 @@
 </tbody>
 </table>
 <p>Accuracy is low because training uses random synthetic data (this is expected behavior).</p>
+</div>
+<div class="tabbed-block">
+<h3 id="weight-imprinting-training-board-edge-tpu-10-categories-x-20-images">Weight Imprinting Training (Board Edge TPU, 10 categories x 20 images)<a class="headerlink" href="#weight-imprinting-training-board-edge-tpu-10-categories-x-20-images" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Training time (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mobilenet_v1_1.0_224_l2norm_quant_edgetpu</td>
+<td>1057.06</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
