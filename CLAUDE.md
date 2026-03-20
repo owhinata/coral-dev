@@ -90,8 +90,10 @@ cmake --build apps/<app>/build
 
 ### デプロイ・実行
 
+mdt (Mendel Development Tool) 経由でデプロイ・実行する。SSH 鍵の設定は不要。
+
 ```bash
-# デプロイ（SSH/mdt でボードへ転送）
+# デプロイ（mdt でボードへ転送）
 cmake --build apps/<app>/build --target deploy
 
 # リモート実行
