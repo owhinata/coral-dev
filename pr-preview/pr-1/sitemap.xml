@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
-        <loc>https://owhinata.github.io/coral-dev/</loc>
+        <loc>https://owhinata.github.io/coral-dev/pr-preview/pr-1/</loc>
         <lastmod>2026-03-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/"/>
     </url>
     <url>
-        <loc>https://owhinata.github.io/coral-dev/development/hello_world/</loc>
+        <loc>https://owhinata.github.io/coral-dev/pr-preview/pr-1/development/hello_world/</loc>
         <lastmod>2026-03-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/development/hello_world/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/development/hello_world/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/development/hello_world/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/development/hello_world/"/>
     </url>
     <url>
-        <loc>https://owhinata.github.io/coral-dev/setup/getting_started/</loc>
+        <loc>https://owhinata.github.io/coral-dev/pr-preview/pr-1/setup/getting_started/</loc>
         <lastmod>2026-03-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/setup/getting_started/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/setup/getting_started/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/setup/getting_started/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/setup/getting_started/"/>
     </url>
     <url>
-        <loc>https://owhinata.github.io/coral-dev/en/</loc>
+        <loc>https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/</loc>
         <lastmod>2026-03-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/"/>
-        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/"/>
     </url>
     <url>
-        <loc>https://owhinata.github.io/coral-dev/en/development/hello_world/</loc>
+        <loc>https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/development/hello_world/</loc>
         <lastmod>2026-03-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/development/hello_world/"/>
-        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/development/hello_world/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/development/hello_world/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/development/hello_world/"/>
     </url>
     <url>
-        <loc>https://owhinata.github.io/coral-dev/en/setup/getting_started/</loc>
+        <loc>https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/setup/getting_started/</loc>
         <lastmod>2026-03-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/en/setup/getting_started/"/>
-        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/setup/getting_started/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/en/setup/getting_started/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://owhinata.github.io/coral-dev/pr-preview/pr-1/setup/getting_started/"/>
     </url>
 </urlset>
