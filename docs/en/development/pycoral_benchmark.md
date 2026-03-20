@@ -197,6 +197,8 @@ python3 apps/pycoral-benchmark/src/inference_benchmark.py \
 
 ### CPU (Dev PC, 20 iterations)
 
+Reference specs: AMD Ryzen 7 8840U (16 threads) / 16 GB RAM
+
 | Model | Mean (ms) | Std (ms) | Min (ms) | Max (ms) |
 |-------|-----------|----------|----------|----------|
 | inception_v1_224_quant | 21.81 | 0.41 | 21.52 | 23.36 |

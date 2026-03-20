@@ -197,6 +197,8 @@ python3 apps/pycoral-benchmark/src/inference_benchmark.py \
 
 ### CPU（開発 PC、20 iterations）
 
+参考スペック: AMD Ryzen 7 8840U（16 スレッド）/ 16 GB RAM
+
 | モデル | Mean (ms) | Std (ms) | Min (ms) | Max (ms) |
 |--------|-----------|----------|----------|----------|
 | inception_v1_224_quant | 21.81 | 0.41 | 21.52 | 23.36 |
