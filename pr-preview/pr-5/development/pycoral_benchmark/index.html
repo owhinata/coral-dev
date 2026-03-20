@@ -1204,30 +1204,33 @@
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build/pycoral-benchmark<span class="w"> </span>-V<span class="w"> </span>-R<span class="w"> </span>inference
 </code></pre></div>
 <h2 id="pc">開発 PC での実行<a class="headerlink" href="#pc" title="Permanent link">&para;</a></h2>
-<p>venv 環境で CPU ベンチマークを実行できます。</p>
+<p>venv 環境で ctest から CPU ベンチマークを実行できます。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>python3<span class="w"> </span>apps/pycoral-benchmark/src/inference_benchmark.py<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>--device<span class="w"> </span>cpu<span class="w"> </span>--model-dir<span class="w"> </span>build/pycoral-benchmark/models
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build/pycoral-benchmark<span class="w"> </span>-V<span class="w"> </span>-L<span class="w"> </span><span class="nb">local</span>
+</code></pre></div>
+<p>直接実行も可能です:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python3<span class="w"> </span>apps/pycoral-benchmark/src/inference_benchmark.py<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>--device<span class="w"> </span>cpu<span class="w"> </span>--model-dir<span class="w"> </span>build/pycoral-benchmark/models
 </code></pre></div>
 <h2 id="_8">実行結果の例<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Device: Edge TPU
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Iterations: 200
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Model directory: /home/mendel/work/pycoral-benchmark
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Model                                                  Mean (ms)    Std (ms)    Min (ms)    Max (ms)
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>----------------------------------------------------------------------------------------------------
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>inception_v1_224_quant_edgetpu.tflite                       3.02        0.11        2.87        3.61
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>inception_v4_299_quant_edgetpu.tflite                      23.40        0.18       23.11       24.32
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>mobilenet_v1_1.0_224_quant_edgetpu.tflite                   2.96        0.09        2.82        3.44
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>mobilenet_v2_1.0_224_quant_edgetpu.tflite                   3.62        0.12        3.45        4.21
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>ssd_mobilenet_v1_coco_quant_postprocess_edgetpu.tflite     10.15        0.14        9.92       10.71
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>ssd_mobilenet_v2_face_quant_postprocess_edgetpu.tflite      6.58        0.13        6.38        7.15
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Device: Edge TPU
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Iterations: 200
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Model directory: /home/mendel/work/pycoral-benchmark
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Model                                                  Mean (ms)    Std (ms)    Min (ms)    Max (ms)
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>----------------------------------------------------------------------------------------------------
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>inception_v1_224_quant_edgetpu.tflite                       3.02        0.11        2.87        3.61
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>inception_v4_299_quant_edgetpu.tflite                      23.40        0.18       23.11       24.32
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>mobilenet_v1_1.0_224_quant_edgetpu.tflite                   2.96        0.09        2.82        3.44
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>mobilenet_v2_1.0_224_quant_edgetpu.tflite                   3.62        0.12        3.45        4.21
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>ssd_mobilenet_v1_coco_quant_postprocess_edgetpu.tflite     10.15        0.14        9.92       10.71
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>ssd_mobilenet_v2_face_quant_postprocess_edgetpu.tflite      6.58        0.13        6.38        7.15
 </code></pre></div>
 <hr />
 <h2 id="cmake-targets">CMake ターゲット / ctest 一覧<a class="headerlink" href="#cmake-targets" title="Permanent link">&para;</a></h2>
 <h3 id="_9">設定<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build/pycoral-benchmark<span class="w"> </span>-S<span class="w"> </span>apps/pycoral-benchmark
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build/pycoral-benchmark<span class="w"> </span>-S<span class="w"> </span>apps/pycoral-benchmark
 </code></pre></div>
 <h3 id="_10">ターゲット一覧<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
 <table>
@@ -1265,6 +1268,11 @@
 <td><code>inference-cpu</code></td>
 <td><code>cpu</code>, <code>inference</code></td>
 <td>ボード CPU 推論ベンチマーク</td>
+</tr>
+<tr>
+<td><code>inference-cpu-local</code></td>
+<td><code>cpu</code>, <code>inference</code>, <code>local</code></td>
+<td>開発 PC CPU 推論ベンチマーク</td>
 </tr>
 </tbody>
 </table>
