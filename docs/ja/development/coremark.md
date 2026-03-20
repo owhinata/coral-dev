@@ -162,7 +162,7 @@ coremark <seed1> <seed2> <seed3> <iterations>
 例: 50000 イテレーションで実行:
 
 ```bash
-cmake/scripts/run.sh '/home/mendel/work/coremark/coremark 0 0 0x66 50000'
+scripts/run.sh '/home/mendel/work/coremark/coremark 0 0 0x66 50000'
 ```
 
 ---

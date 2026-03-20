@@ -5,7 +5,7 @@
 
 set(CORAL_IP "" CACHE STRING "Coral Dev Board IP address (empty = auto-detect via mdt)")
 
-set(_CORAL_SCRIPTS_DIR "${CMAKE_CURRENT_LIST_DIR}/scripts")
+set(_CORAL_SCRIPTS_DIR "${CMAKE_CURRENT_LIST_DIR}/../scripts")
 
 # --- coral_add_deploy_target() ---
 # Arguments: DEPLOY_DIR, DEPENDS, FILES (local:remote ...)
