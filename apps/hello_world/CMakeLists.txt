@@ -7,11 +7,11 @@ add_executable(hello_world src/main.c)
 include(${CMAKE_CURRENT_LIST_DIR}/../../cmake/coral-deploy.cmake)
 
 coral_add_deploy_target(
-    DEPLOY_DIR /home/mendel/hello_world
+    DEPLOY_DIR /home/mendel/work/hello_world
     DEPENDS hello_world
     FILES "$<TARGET_FILE:hello_world>:hello_world"
 )
 
 coral_add_run_target(
-    COMMAND /home/mendel/hello_world/hello_world
+    COMMAND /home/mendel/work/hello_world/hello_world
 )
