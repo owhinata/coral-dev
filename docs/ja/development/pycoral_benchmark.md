@@ -171,54 +171,6 @@ python3 apps/pycoral-benchmark/src/inference_benchmark.py \
     --device cpu --model-dir build/pycoral-benchmark/models
 ```
 
-## 実行結果
-
-### Edge TPU（ボード、200 iterations）
-
-| モデル | Mean (ms) | Std (ms) | Min (ms) | Max (ms) |
-|--------|-----------|----------|----------|----------|
-| inception_v1_224_quant_edgetpu | 5.65 | 0.42 | 4.74 | 6.70 |
-| inception_v4_299_quant_edgetpu | 101.37 | 0.13 | 100.79 | 101.67 |
-| mobilenet_v1_1.0_224_quant_edgetpu | 3.15 | 0.27 | 2.68 | 4.05 |
-| mobilenet_v2_1.0_224_quant_edgetpu | 3.39 | 0.23 | 3.21 | 4.28 |
-| ssd_mobilenet_v1_coco_quant_postprocess_edgetpu | 11.44 | 0.28 | 10.51 | 11.74 |
-| ssd_mobilenet_v2_face_quant_postprocess_edgetpu | 8.07 | 0.66 | 6.38 | 9.02 |
-
-### CPU（ボード、20 iterations）
-
-| モデル | Mean (ms) | Std (ms) | Min (ms) | Max (ms) |
-|--------|-----------|----------|----------|----------|
-| inception_v1_224_quant | 376.13 | 1.57 | 375.60 | 382.97 |
-| inception_v4_299_quant | 2973.37 | 0.28 | 2972.86 | 2973.91 |
-| mobilenet_v1_1.0_224_quant | 167.42 | 1.75 | 166.87 | 175.04 |
-| mobilenet_v2_1.0_224_quant | 126.85 | 0.08 | 126.72 | 127.07 |
-| ssd_mobilenet_v1_coco_quant_postprocess | 350.32 | 0.09 | 350.17 | 350.51 |
-| ssd_mobilenet_v2_face_quant_postprocess | 288.89 | 0.09 | 288.70 | 289.04 |
-
-### CPU（開発 PC、20 iterations）
-
-参考スペック: AMD Ryzen 7 8840U（16 スレッド）/ 16 GB RAM
-
-| モデル | Mean (ms) | Std (ms) | Min (ms) | Max (ms) |
-|--------|-----------|----------|----------|----------|
-| inception_v1_224_quant | 21.81 | 0.41 | 21.52 | 23.36 |
-| inception_v4_299_quant | 159.80 | 0.54 | 159.01 | 160.62 |
-| mobilenet_v1_1.0_224_quant | 8.26 | 0.14 | 8.14 | 8.57 |
-| mobilenet_v2_1.0_224_quant | 5.49 | 0.06 | 5.45 | 5.70 |
-| ssd_mobilenet_v1_coco_quant_postprocess | 17.84 | 0.12 | 17.73 | 18.24 |
-| ssd_mobilenet_v2_face_quant_postprocess | 13.94 | 0.02 | 13.88 | 14.00 |
-
-### Softmax 回帰学習（ボード CPU、500 SGD iterations）
-
-| Classes | Features | Time (ms) | Accuracy |
-|---------|----------|-----------|----------|
-| 4 | 256 | 1035.28 | 25.39% |
-| 16 | 256 | 1504.50 | 7.81% |
-| 4 | 1024 | 4994.52 | 23.83% |
-| 16 | 1024 | 6260.45 | 5.08% |
-
-ランダムデータでの学習のため、精度は低い値になります（正常な動作です）。
-
 ---
 
 ## CMake ターゲット / ctest 一覧 { #cmake-targets }
@@ -251,3 +203,55 @@ CMake キャッシュ変数で接続先をカスタマイズできます:
 | 変数 | デフォルト | 説明 |
 |------|-----------|------|
 | `CORAL_IP` | (空 = mdt で自動検出) | Coral Dev Board の IP アドレス |
+
+## 実行結果
+
+=== "Inference"
+
+    ### Edge TPU（ボード、200 iterations）
+
+    | モデル | Mean (ms) | Std (ms) | Min (ms) | Max (ms) |
+    |--------|-----------|----------|----------|----------|
+    | inception_v1_224_quant_edgetpu | 5.65 | 0.42 | 4.74 | 6.70 |
+    | inception_v4_299_quant_edgetpu | 101.37 | 0.13 | 100.79 | 101.67 |
+    | mobilenet_v1_1.0_224_quant_edgetpu | 3.15 | 0.27 | 2.68 | 4.05 |
+    | mobilenet_v2_1.0_224_quant_edgetpu | 3.39 | 0.23 | 3.21 | 4.28 |
+    | ssd_mobilenet_v1_coco_quant_postprocess_edgetpu | 11.44 | 0.28 | 10.51 | 11.74 |
+    | ssd_mobilenet_v2_face_quant_postprocess_edgetpu | 8.07 | 0.66 | 6.38 | 9.02 |
+
+    ### CPU（ボード、20 iterations）
+
+    | モデル | Mean (ms) | Std (ms) | Min (ms) | Max (ms) |
+    |--------|-----------|----------|----------|----------|
+    | inception_v1_224_quant | 376.13 | 1.57 | 375.60 | 382.97 |
+    | inception_v4_299_quant | 2973.37 | 0.28 | 2972.86 | 2973.91 |
+    | mobilenet_v1_1.0_224_quant | 167.42 | 1.75 | 166.87 | 175.04 |
+    | mobilenet_v2_1.0_224_quant | 126.85 | 0.08 | 126.72 | 127.07 |
+    | ssd_mobilenet_v1_coco_quant_postprocess | 350.32 | 0.09 | 350.17 | 350.51 |
+    | ssd_mobilenet_v2_face_quant_postprocess | 288.89 | 0.09 | 288.70 | 289.04 |
+
+    ### CPU（開発 PC、20 iterations）
+
+    参考スペック: AMD Ryzen 7 8840U（16 スレッド）/ 16 GB RAM
+
+    | モデル | Mean (ms) | Std (ms) | Min (ms) | Max (ms) |
+    |--------|-----------|----------|----------|----------|
+    | inception_v1_224_quant | 21.81 | 0.41 | 21.52 | 23.36 |
+    | inception_v4_299_quant | 159.80 | 0.54 | 159.01 | 160.62 |
+    | mobilenet_v1_1.0_224_quant | 8.26 | 0.14 | 8.14 | 8.57 |
+    | mobilenet_v2_1.0_224_quant | 5.49 | 0.06 | 5.45 | 5.70 |
+    | ssd_mobilenet_v1_coco_quant_postprocess | 17.84 | 0.12 | 17.73 | 18.24 |
+    | ssd_mobilenet_v2_face_quant_postprocess | 13.94 | 0.02 | 13.88 | 14.00 |
+
+=== "Softmax Regression"
+
+    ### Softmax 回帰学習（ボード CPU、500 SGD iterations）
+
+    | Classes | Features | Time (ms) | Accuracy |
+    |---------|----------|-----------|----------|
+    | 4 | 256 | 1035.28 | 25.39% |
+    | 16 | 256 | 1504.50 | 7.81% |
+    | 4 | 1024 | 4994.52 | 23.83% |
+    | 16 | 1024 | 6260.45 | 5.08% |
+
+    ランダムデータでの学習のため、精度は低い値になります（正常な動作です）。
