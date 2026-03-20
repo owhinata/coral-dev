@@ -45,6 +45,7 @@ plugins:
           nav_translations:
             セットアップ: Setup
             開発: Development
+            技術情報: Technical
 
 nav:
   - index.md
@@ -54,6 +55,8 @@ nav:
   - 開発:
       - development/hello_world.md
       - development/coremark.md
+  - 技術情報:
+      - technical/display_image.md
 
 markdown_extensions:
   - admonition
