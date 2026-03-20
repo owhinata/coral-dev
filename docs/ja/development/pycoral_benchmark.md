@@ -156,11 +156,17 @@ ctest --test-dir build/pycoral-benchmark -V -R inference
 
 ## 開発 PC での実行
 
-venv 環境で CPU ベンチマークを実行できます。
+venv 環境で ctest から CPU ベンチマークを実行できます。
 
 ```bash
 source .venv/bin/activate
 pip install -r requirements.txt
+ctest --test-dir build/pycoral-benchmark -V -L local
+```
+
+直接実行も可能です:
+
+```bash
 python3 apps/pycoral-benchmark/src/inference_benchmark.py \
     --device cpu --model-dir build/pycoral-benchmark/models
 ```
@@ -204,6 +210,7 @@ cmake -B build/pycoral-benchmark -S apps/pycoral-benchmark
 |---------|--------|------|
 | `inference-edgetpu` | `edgetpu`, `inference` | Edge TPU 推論ベンチマーク |
 | `inference-cpu` | `cpu`, `inference` | ボード CPU 推論ベンチマーク |
+| `inference-cpu-local` | `cpu`, `inference`, `local` | 開発 PC CPU 推論ベンチマーク |
 
 ### 接続設定
 

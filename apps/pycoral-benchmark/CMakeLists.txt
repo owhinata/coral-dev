@@ -73,3 +73,14 @@ add_test(NAME inference-cpu
             "cd ${DEPLOY_DIR} && python3 inference_benchmark.py --device cpu"
 )
 set_tests_properties(inference-cpu PROPERTIES LABELS "cpu;inference")
+
+find_program(PYTHON3 python3 HINTS ${CMAKE_CURRENT_LIST_DIR}/../../.venv/bin NO_DEFAULT_PATH)
+if(NOT PYTHON3)
+    find_program(PYTHON3 python3)
+endif()
+
+add_test(NAME inference-cpu-local
+    COMMAND ${PYTHON3} ${CMAKE_CURRENT_SOURCE_DIR}/src/inference_benchmark.py
+            --device cpu --model-dir ${MODEL_DIR}
+)
+set_tests_properties(inference-cpu-local PROPERTIES LABELS "cpu;inference;local")

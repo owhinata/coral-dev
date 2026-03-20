@@ -156,11 +156,17 @@ ctest --test-dir build/pycoral-benchmark -V -R inference
 
 ## Running on Development PC
 
-CPU benchmarks can be run in a venv environment.
+CPU benchmarks can be run via ctest in a venv environment.
 
 ```bash
 source .venv/bin/activate
 pip install -r requirements.txt
+ctest --test-dir build/pycoral-benchmark -V -L local
+```
+
+Direct execution is also possible:
+
+```bash
 python3 apps/pycoral-benchmark/src/inference_benchmark.py \
     --device cpu --model-dir build/pycoral-benchmark/models
 ```
@@ -204,6 +210,7 @@ cmake -B build/pycoral-benchmark -S apps/pycoral-benchmark
 |-----------|--------|-------------|
 | `inference-edgetpu` | `edgetpu`, `inference` | Edge TPU inference benchmark |
 | `inference-cpu` | `cpu`, `inference` | Board CPU inference benchmark |
+| `inference-cpu-local` | `cpu`, `inference`, `local` | Dev PC CPU inference benchmark |
 
 ### Connection Settings
 
