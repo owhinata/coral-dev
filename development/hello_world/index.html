@@ -742,7 +742,7 @@
 </ul>
 <h2 id="_2">ビルド<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build/hello_world<span class="w"> </span>-S<span class="w"> </span>apps/hello_world<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span>cmake/toolchain-coral-aarch64.cmake
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>-DCMAKE_TOOLCHAIN_FILE<span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/cmake/toolchain-coral-aarch64.cmake
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build/hello_world
 </code></pre></div>
 <h2 id="_3">デプロイ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
