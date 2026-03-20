@@ -49,8 +49,10 @@ sudo apt-get install imagemagick
 ### コマンド
 
 ```bash
-DISPLAY=:0 display <file>
+DISPLAY=:0 display -geometry +0+0 <file>
 ```
+
+`-geometry +0+0` を指定しないとウィンドウが画面下部に配置され、画像が見切れることがあります。
 
 ## 方法 3: OpenCV (python3-opencv)
 

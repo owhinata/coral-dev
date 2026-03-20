@@ -49,8 +49,10 @@ sudo apt-get install imagemagick
 ### Command
 
 ```bash
-DISPLAY=:0 display <file>
+DISPLAY=:0 display -geometry +0+0 <file>
 ```
+
+Without `-geometry +0+0`, the window may be placed at the bottom of the screen, causing the image to be clipped.
 
 ## Method 3: OpenCV (python3-opencv)
 
