@@ -208,6 +208,17 @@ Reference specs: AMD Ryzen 7 8840U (16 threads) / 16 GB RAM
 | ssd_mobilenet_v1_coco_quant_postprocess | 17.84 | 0.12 | 17.73 | 18.24 |
 | ssd_mobilenet_v2_face_quant_postprocess | 13.94 | 0.02 | 13.88 | 14.00 |
 
+### Softmax Regression Training (Board CPU, 500 SGD iterations)
+
+| Classes | Features | Time (ms) | Accuracy |
+|---------|----------|-----------|----------|
+| 4 | 256 | 1035.28 | 25.39% |
+| 16 | 256 | 1504.50 | 7.81% |
+| 4 | 1024 | 4994.52 | 23.83% |
+| 16 | 1024 | 6260.45 | 5.08% |
+
+Accuracy is low because training uses random synthetic data (this is expected behavior).
+
 ---
 
 ## CMake Targets / ctest List { #cmake-targets }
@@ -231,6 +242,7 @@ cmake -B build/pycoral-benchmark -S apps/pycoral-benchmark
 | `inference-edgetpu` | `edgetpu`, `inference` | Edge TPU inference benchmark |
 | `inference-cpu` | `cpu`, `inference` | Board CPU inference benchmark |
 | `inference-cpu-local` | `cpu`, `inference`, `local` | Dev PC CPU inference benchmark |
+| `softmax-regression` | `cpu`, `softmax-regression` | Softmax regression training benchmark |
 
 ### Connection Settings
 

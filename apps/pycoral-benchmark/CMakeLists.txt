@@ -46,6 +46,7 @@ set(DEPLOY_DIR /home/mendel/work/pycoral-benchmark)
 # Collect deploy file mappings (flat: all files go to DEPLOY_DIR root)
 set(DEPLOY_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/inference_benchmark.py:inference_benchmark.py"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/softmax_regression_benchmark.py:softmax_regression_benchmark.py"
 )
 foreach(model ${MODELS})
     list(APPEND DEPLOY_FILES
@@ -84,3 +85,9 @@ add_test(NAME inference-cpu-local
             --device cpu --model-dir ${MODEL_DIR}
 )
 set_tests_properties(inference-cpu-local PROPERTIES LABELS "cpu;inference;local")
+
+add_test(NAME softmax-regression
+    COMMAND ${_CORAL_SCRIPTS_DIR}/run.sh
+            "cd ${DEPLOY_DIR} && python3 softmax_regression_benchmark.py"
+)
+set_tests_properties(softmax-regression PROPERTIES LABELS "cpu;softmax-regression")

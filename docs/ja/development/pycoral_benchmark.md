@@ -208,6 +208,17 @@ python3 apps/pycoral-benchmark/src/inference_benchmark.py \
 | ssd_mobilenet_v1_coco_quant_postprocess | 17.84 | 0.12 | 17.73 | 18.24 |
 | ssd_mobilenet_v2_face_quant_postprocess | 13.94 | 0.02 | 13.88 | 14.00 |
 
+### Softmax 回帰学習（ボード CPU、500 SGD iterations）
+
+| Classes | Features | Time (ms) | Accuracy |
+|---------|----------|-----------|----------|
+| 4 | 256 | 1035.28 | 25.39% |
+| 16 | 256 | 1504.50 | 7.81% |
+| 4 | 1024 | 4994.52 | 23.83% |
+| 16 | 1024 | 6260.45 | 5.08% |
+
+ランダムデータでの学習のため、精度は低い値になります（正常な動作です）。
+
 ---
 
 ## CMake ターゲット / ctest 一覧 { #cmake-targets }
@@ -231,6 +242,7 @@ cmake -B build/pycoral-benchmark -S apps/pycoral-benchmark
 | `inference-edgetpu` | `edgetpu`, `inference` | Edge TPU 推論ベンチマーク |
 | `inference-cpu` | `cpu`, `inference` | ボード CPU 推論ベンチマーク |
 | `inference-cpu-local` | `cpu`, `inference`, `local` | 開発 PC CPU 推論ベンチマーク |
+| `softmax-regression` | `cpu`, `softmax-regression` | Softmax 回帰学習ベンチマーク |
 
 ### 接続設定
 
