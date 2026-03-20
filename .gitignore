@@ -1,0 +1,14 @@
+# MkDocs
+site/
+
+# Python
+__pycache__/
+.venv/
+venv/
+*.pyc
+
+# CMake out-of-source build
+build/
+
+# OS
+.DS_Store
