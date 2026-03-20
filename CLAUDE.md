@@ -32,6 +32,13 @@ EOF
 変更内容の説明。
 ```
 
+ドキュメント (`docs/`) に変更がある場合は、PR プレビューの該当ページへのリンクをコメントに含める:
+
+```
+変更後のドキュメント:
+- [ページ名](https://owhinata.github.io/coral-dev/pr-preview/pr-<PR番号>/path/to/page/)
+```
+
 ### PRマージ
 
 ```bash
