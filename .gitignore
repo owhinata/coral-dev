@@ -10,6 +10,9 @@ venv/
 # CMake out-of-source build
 build/
 
+# Cross-compiler toolchain
+toolchain/
+
 # Coral device IP cache
 .coral-ip
 

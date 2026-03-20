@@ -44,11 +44,14 @@ plugins:
           build: true
           nav_translations:
             セットアップ: Setup
+            開発: Development
 
 nav:
   - index.md
   - セットアップ:
       - setup/getting_started.md
+  - 開発:
+      - development/hello_world.md
 
 markdown_extensions:
   - admonition

@@ -1,48 +1,59 @@
 # coral-dev
 
-Google Coral Dev Board 向けの組込みAI開発環境。
+Embedded AI development environment for the Google Coral Dev Board.
 
-## 概要
+[日本語版はこちら](README_ja.md)
 
-- CMake ベースのクロスコンパイル環境（aarch64-linux-gnu）
-- SSH/mdt によるワンコマンドデプロイ・実行
-- TensorFlow Lite + Edge TPU による AI 推論
-- MkDocs による日英バイリンガルドキュメント
+## Overview
 
-## ドキュメント
+- CMake-based cross-compilation (aarch64-linux-gnu)
+- One-command deploy & run via SSH/mdt
+- AI inference with TensorFlow Lite + Edge TPU
+- Bilingual documentation (JA/EN) with MkDocs
 
-詳細は [Coral Dev Board Guide](https://owhinata.github.io/coral-dev/) を参照してください。
+## Documentation
 
-## クイックスタート
+See the [Coral Dev Board Guide](https://owhinata.github.io/coral-dev/) for details.
 
-### 必要環境
+## Quick Start
 
-- aarch64 クロスコンパイラ (`sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu`)
+### Prerequisites
+
 - CMake 3.16+
-- mdt (`pip install mendel-development-tool`)
+- Python 3 (for venv)
 
-### ビルド・デプロイ
+### Setup
 
 ```bash
-# ビルド
-cmake -B apps/<app>/build -S apps/<app> \
+# Create venv and install tools (mdt, mkdocs, etc.)
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+
+# Install cross-compiler (ARM GNU Toolchain 8.3, glibc 2.28)
+./cmake/setup-toolchain.sh
+```
+
+### Build & Deploy
+
+```bash
+# Build
+cmake -B build/<app> -S apps/<app> \
     -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
-cmake --build apps/<app>/build
+cmake --build build/<app>
 
-# デプロイ（ボードへ転送）
-cmake --build apps/<app>/build --target deploy
+# Deploy to board
+cmake --build build/<app> --target deploy
 
-# リモート実行
-cmake --build apps/<app>/build --target run
+# Run remotely
+cmake --build build/<app> --target run
 ```
 
-### ドキュメントのローカルビルド
+### Build Documentation Locally
 
 ```bash
-pip install -r requirements.txt
-mkdocs serve
+.venv/bin/mkdocs serve
 ```
 
-## ライセンス
+## License
 
 [MIT](LICENSE)

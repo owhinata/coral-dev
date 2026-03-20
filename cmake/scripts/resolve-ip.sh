@@ -31,14 +31,20 @@ if [ -f "$CACHE_FILE" ]; then
     fi
 fi
 
-# --- Auto-detect via mdt ---
-if ! command -v mdt &>/dev/null; then
-    echo "Error: mdt not found. Install: pip install mendel-development-tool" >&2
+# --- Locate mdt ---
+MDT=""
+if [ -x "$PROJECT_ROOT/.venv/bin/mdt" ]; then
+    MDT="$PROJECT_ROOT/.venv/bin/mdt"
+elif command -v mdt &>/dev/null; then
+    MDT="mdt"
+else
+    echo "Error: mdt not found." >&2
+    echo "  Run: python3 -m venv .venv && .venv/bin/pip install -r requirements.txt" >&2
     echo "  Or set: CORAL_IP=<ip>" >&2
     exit 1
 fi
 
-IP=$(mdt devices 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
+IP=$("$MDT" devices 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | head -1 || true)
 if [ -z "$IP" ]; then
     echo "Error: No Coral device found via mdt." >&2
     echo "  - Is the board connected via USB?" >&2

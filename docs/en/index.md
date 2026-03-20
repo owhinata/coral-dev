@@ -26,11 +26,11 @@ This repository provides a development environment for the Coral Dev Board.
 
 ```bash
 # Build
-cmake -B apps/<app>/build -S apps/<app> \
+cmake -B build/<app> -S apps/<app> \
     -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain-coral-aarch64.cmake
-cmake --build apps/<app>/build
+cmake --build build/<app>
 
 # Deploy & Run
-cmake --build apps/<app>/build --target deploy
-cmake --build apps/<app>/build --target run
+cmake --build build/<app> --target deploy
+cmake --build build/<app> --target run
 ```
