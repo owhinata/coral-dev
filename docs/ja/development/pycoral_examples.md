@@ -288,3 +288,100 @@ cmake -B build/pycoral-examples -S apps/pycoral-examples
 | 変数 | デフォルト | 説明 |
 |------|-----------|------|
 | `CORAL_IP` | (空 = mdt で自動検出) | Coral Dev Board の IP アドレス |
+
+## 実行結果
+
+=== "推論系"
+
+    ### classify_image
+
+    | 項目 | 値 |
+    |------|-----|
+    | モデル | mobilenet_v2_1.0_224_inat_bird_quant_edgetpu |
+    | 1st inference (model load 含む) | 14.70 ms |
+    | 2nd inference | 3.37 ms |
+
+    | ラベル | スコア |
+    |--------|--------|
+    | Ara macao (Scarlet Macaw) | 0.75781 |
+    | Platycercus elegans (Crimson Rosella) | 0.07422 |
+    | Coracias caudatus (Lilac-breasted Roller) | 0.01562 |
+
+    ### detect_image
+
+    | 項目 | 値 |
+    |------|-----|
+    | モデル | ssd_mobilenet_v2_coco_quant_postprocess_edgetpu |
+    | 1st inference (model load 含む) | 36.96 ms |
+    | 2nd inference | 12.58 ms |
+
+    | ラベル | スコア | BBox |
+    |--------|--------|------|
+    | tie | 0.840 | (227, 419, 292, 541) |
+    | person | 0.805 | (2, 4, 513, 595) |
+
+    ### semantic_segmentation
+
+    | 項目 | 値 |
+    |------|-----|
+    | モデル | deeplabv3_mnv2_pascal_quant_edgetpu |
+    | 1st inference (model load 含む) | 223.14 ms |
+    | 2nd inference | 220.26 ms |
+
+    ### movenet_pose_estimation
+
+    | 項目 | 値 |
+    |------|-----|
+    | モデル | movenet_single_pose_lightning_ptq_edgetpu |
+    | 1st inference (model load 含む) | 29.12 ms |
+    | 2nd inference | 26.90 ms |
+
+    | キーポイント | 座標 (x, y) | スコア |
+    |-------------|-------------|--------|
+    | nose | (0.578, 0.332) | 0.500 |
+    | left_eye | (0.590, 0.320) | 0.635 |
+    | right_eye | (0.565, 0.311) | 0.701 |
+    | left_shoulder | (0.578, 0.422) | 0.635 |
+    | right_shoulder | (0.418, 0.414) | 0.500 |
+    | left_hip | (0.389, 0.598) | 0.754 |
+    | right_hip | (0.287, 0.615) | 0.430 |
+    | left_ankle | (0.512, 0.848) | 0.635 |
+    | right_ankle | (0.340, 0.889) | 0.701 |
+
+    ### small_object_detection
+
+    | 項目 | 値 |
+    |------|-----|
+    | モデル | ssd_mobilenet_v2_coco_quant_no_nms_edgetpu |
+    | タイルサイズ | 1352x900, 500x500, 250x250 |
+    | 検出時間 | 922.44 ms |
+    | 検出数 | 18 オブジェクト（kite: 7, person: 10, backpack: 1） |
+
+=== "転移学習"
+
+    ### backprop_last_layer
+
+    | 項目 | 値 |
+    |------|-----|
+    | モデル | mobilenet_v1_1.0_224_quant_embedding_extractor_edgetpu |
+    | データセット | flower_photos（5 クラス × 約 700 枚） |
+    | 前処理時間 | 38.48 秒 |
+    | 学習時間 | 7.64 秒 |
+    | 合計時間 | 50.34 秒 |
+    | テスト精度 | 89.65% |
+
+    ### imprinting_learning
+
+    | 項目 | 値 |
+    |------|-----|
+    | モデル | mobilenet_v1_1.0_224_l2norm_quant_edgetpu |
+    | データセット | open_image_v4_subset（10 カテゴリ × 20 枚） |
+    | 学習時間 | 36576.60 ms |
+
+    | Top-k | 精度 |
+    |-------|------|
+    | Top 1 | 98% |
+    | Top 2 | 100% |
+    | Top 3 | 100% |
+    | Top 4 | 100% |
+    | Top 5 | 100% |

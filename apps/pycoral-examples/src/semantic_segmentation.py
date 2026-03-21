@@ -26,7 +26,7 @@ def create_pascal_label_colormap():
 
     for shift in reversed(range(8)):
         for channel in range(3):
-            colormap[:, channel] |= ((indices >> channel) & 1) << shift
+            colormap[:, channel] |= (((indices >> channel) & 1) << shift).astype(np.uint8)
         indices >>= 3
 
     return colormap

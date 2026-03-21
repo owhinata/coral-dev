@@ -288,3 +288,100 @@ cmake -B build/pycoral-examples -S apps/pycoral-examples
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `CORAL_IP` | (empty = auto-detect via mdt) | Coral Dev Board IP address |
+
+## Results
+
+=== "Inference"
+
+    ### classify_image
+
+    | Item | Value |
+    |------|-------|
+    | Model | mobilenet_v2_1.0_224_inat_bird_quant_edgetpu |
+    | 1st inference (includes model load) | 14.70 ms |
+    | 2nd inference | 3.37 ms |
+
+    | Label | Score |
+    |-------|-------|
+    | Ara macao (Scarlet Macaw) | 0.75781 |
+    | Platycercus elegans (Crimson Rosella) | 0.07422 |
+    | Coracias caudatus (Lilac-breasted Roller) | 0.01562 |
+
+    ### detect_image
+
+    | Item | Value |
+    |------|-------|
+    | Model | ssd_mobilenet_v2_coco_quant_postprocess_edgetpu |
+    | 1st inference (includes model load) | 36.96 ms |
+    | 2nd inference | 12.58 ms |
+
+    | Label | Score | BBox |
+    |-------|-------|------|
+    | tie | 0.840 | (227, 419, 292, 541) |
+    | person | 0.805 | (2, 4, 513, 595) |
+
+    ### semantic_segmentation
+
+    | Item | Value |
+    |------|-------|
+    | Model | deeplabv3_mnv2_pascal_quant_edgetpu |
+    | 1st inference (includes model load) | 223.14 ms |
+    | 2nd inference | 220.26 ms |
+
+    ### movenet_pose_estimation
+
+    | Item | Value |
+    |------|-------|
+    | Model | movenet_single_pose_lightning_ptq_edgetpu |
+    | 1st inference (includes model load) | 29.12 ms |
+    | 2nd inference | 26.90 ms |
+
+    | Keypoint | Coordinates (x, y) | Score |
+    |----------|---------------------|-------|
+    | nose | (0.578, 0.332) | 0.500 |
+    | left_eye | (0.590, 0.320) | 0.635 |
+    | right_eye | (0.565, 0.311) | 0.701 |
+    | left_shoulder | (0.578, 0.422) | 0.635 |
+    | right_shoulder | (0.418, 0.414) | 0.500 |
+    | left_hip | (0.389, 0.598) | 0.754 |
+    | right_hip | (0.287, 0.615) | 0.430 |
+    | left_ankle | (0.512, 0.848) | 0.635 |
+    | right_ankle | (0.340, 0.889) | 0.701 |
+
+    ### small_object_detection
+
+    | Item | Value |
+    |------|-------|
+    | Model | ssd_mobilenet_v2_coco_quant_no_nms_edgetpu |
+    | Tile sizes | 1352x900, 500x500, 250x250 |
+    | Detection time | 922.44 ms |
+    | Detected | 18 objects (kite: 7, person: 10, backpack: 1) |
+
+=== "Transfer Learning"
+
+    ### backprop_last_layer
+
+    | Item | Value |
+    |------|-------|
+    | Model | mobilenet_v1_1.0_224_quant_embedding_extractor_edgetpu |
+    | Dataset | flower_photos (5 classes x ~700 images) |
+    | Preprocessing time | 38.48 sec |
+    | Training time | 7.64 sec |
+    | Total time | 50.34 sec |
+    | Test accuracy | 89.65% |
+
+    ### imprinting_learning
+
+    | Item | Value |
+    |------|-------|
+    | Model | mobilenet_v1_1.0_224_l2norm_quant_edgetpu |
+    | Dataset | open_image_v4_subset (10 categories x 20 images) |
+    | Training time | 36576.60 ms |
+
+    | Top-k | Accuracy |
+    |-------|----------|
+    | Top 1 | 98% |
+    | Top 2 | 100% |
+    | Top 3 | 100% |
+    | Top 4 | 100% |
+    | Top 5 | 100% |

@@ -71,7 +71,15 @@ add_custom_target(download-flower-photos
     COMMAND ${CMAKE_COMMAND} -E env
             "CORAL_IP=${CORAL_IP}"
             ${_CORAL_SCRIPTS_DIR}/run.sh
-            "curl -L http://download.tensorflow.org/example_images/flower_photos.tgz | tar xz -C ${DEPLOY_DIR}"
+            "curl -L http://download.tensorflow.org/example_images/flower_photos.tgz -o /tmp/flower_photos.tgz"
+    COMMAND ${CMAKE_COMMAND} -E env
+            "CORAL_IP=${CORAL_IP}"
+            ${_CORAL_SCRIPTS_DIR}/run.sh
+            "tar xzf /tmp/flower_photos.tgz -C ${DEPLOY_DIR}"
+    COMMAND ${CMAKE_COMMAND} -E env
+            "CORAL_IP=${CORAL_IP}"
+            ${_CORAL_SCRIPTS_DIR}/run.sh
+            "rm /tmp/flower_photos.tgz"
     USES_TERMINAL
     COMMENT "Downloading flower_photos dataset to board"
 )
@@ -80,7 +88,15 @@ add_custom_target(download-imprinting-data
     COMMAND ${CMAKE_COMMAND} -E env
             "CORAL_IP=${CORAL_IP}"
             ${_CORAL_SCRIPTS_DIR}/run.sh
-            "wget -q https://dl.google.com/coral/sample_data/imprinting_data_script.tar.gz -O /tmp/imp.tar.gz && tar xzf /tmp/imp.tar.gz -C /tmp && /tmp/imprinting_data_script/download_imprinting_test_data.sh ${DEPLOY_DIR}"
+            "wget -q https://dl.google.com/coral/sample_data/imprinting_data_script.tar.gz -O /tmp/imp.tar.gz"
+    COMMAND ${CMAKE_COMMAND} -E env
+            "CORAL_IP=${CORAL_IP}"
+            ${_CORAL_SCRIPTS_DIR}/run.sh
+            "tar xzf /tmp/imp.tar.gz -C /tmp"
+    COMMAND ${CMAKE_COMMAND} -E env
+            "CORAL_IP=${CORAL_IP}"
+            ${_CORAL_SCRIPTS_DIR}/run.sh
+            "/tmp/imprinting_data_script/download_imprinting_test_data.sh ${DEPLOY_DIR}"
     USES_TERMINAL
     COMMENT "Downloading imprinting dataset to board"
 )
