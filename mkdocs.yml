@@ -56,6 +56,7 @@ nav:
       - development/hello_world.md
       - development/coremark.md
       - development/pycoral_benchmark.md
+      - development/pycoral_examples.md
   - 技術情報:
       - technical/display_image.md
 
