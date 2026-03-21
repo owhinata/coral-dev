@@ -953,6 +953,100 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        実行結果
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="実行結果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classify_image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        classify_image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detect_image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        detect_image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semantic_segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        semantic_segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#movenet_pose_estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        movenet_pose_estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#small_object_detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        small_object_detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backprop_last_layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        backprop_last_layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imprinting_learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        imprinting_learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1407,6 +1501,321 @@
 </tr>
 </tbody>
 </table>
+<h2 id="_15">実行結果<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">推論系</label><label for="__tabbed_2_2">転移学習</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<h3 id="classify_image">classify_image<a class="headerlink" href="#classify_image" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル</td>
+<td>mobilenet_v2_1.0_224_inat_bird_quant_edgetpu</td>
+</tr>
+<tr>
+<td>1st inference (model load 含む)</td>
+<td>14.70 ms</td>
+</tr>
+<tr>
+<td>2nd inference</td>
+<td>3.37 ms</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ラベル</th>
+<th>スコア</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ara macao (Scarlet Macaw)</td>
+<td>0.75781</td>
+</tr>
+<tr>
+<td>Platycercus elegans (Crimson Rosella)</td>
+<td>0.07422</td>
+</tr>
+<tr>
+<td>Coracias caudatus (Lilac-breasted Roller)</td>
+<td>0.01562</td>
+</tr>
+</tbody>
+</table>
+<h3 id="detect_image">detect_image<a class="headerlink" href="#detect_image" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル</td>
+<td>ssd_mobilenet_v2_coco_quant_postprocess_edgetpu</td>
+</tr>
+<tr>
+<td>1st inference (model load 含む)</td>
+<td>36.96 ms</td>
+</tr>
+<tr>
+<td>2nd inference</td>
+<td>12.58 ms</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ラベル</th>
+<th>スコア</th>
+<th>BBox</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tie</td>
+<td>0.840</td>
+<td>(227, 419, 292, 541)</td>
+</tr>
+<tr>
+<td>person</td>
+<td>0.805</td>
+<td>(2, 4, 513, 595)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="semantic_segmentation">semantic_segmentation<a class="headerlink" href="#semantic_segmentation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル</td>
+<td>deeplabv3_mnv2_pascal_quant_edgetpu</td>
+</tr>
+<tr>
+<td>1st inference (model load 含む)</td>
+<td>223.14 ms</td>
+</tr>
+<tr>
+<td>2nd inference</td>
+<td>220.26 ms</td>
+</tr>
+</tbody>
+</table>
+<h3 id="movenet_pose_estimation">movenet_pose_estimation<a class="headerlink" href="#movenet_pose_estimation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル</td>
+<td>movenet_single_pose_lightning_ptq_edgetpu</td>
+</tr>
+<tr>
+<td>1st inference (model load 含む)</td>
+<td>29.12 ms</td>
+</tr>
+<tr>
+<td>2nd inference</td>
+<td>26.90 ms</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>キーポイント</th>
+<th>座標 (x, y)</th>
+<th>スコア</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nose</td>
+<td>(0.578, 0.332)</td>
+<td>0.500</td>
+</tr>
+<tr>
+<td>left_eye</td>
+<td>(0.590, 0.320)</td>
+<td>0.635</td>
+</tr>
+<tr>
+<td>right_eye</td>
+<td>(0.565, 0.311)</td>
+<td>0.701</td>
+</tr>
+<tr>
+<td>left_shoulder</td>
+<td>(0.578, 0.422)</td>
+<td>0.635</td>
+</tr>
+<tr>
+<td>right_shoulder</td>
+<td>(0.418, 0.414)</td>
+<td>0.500</td>
+</tr>
+<tr>
+<td>left_hip</td>
+<td>(0.389, 0.598)</td>
+<td>0.754</td>
+</tr>
+<tr>
+<td>right_hip</td>
+<td>(0.287, 0.615)</td>
+<td>0.430</td>
+</tr>
+<tr>
+<td>left_ankle</td>
+<td>(0.512, 0.848)</td>
+<td>0.635</td>
+</tr>
+<tr>
+<td>right_ankle</td>
+<td>(0.340, 0.889)</td>
+<td>0.701</td>
+</tr>
+</tbody>
+</table>
+<h3 id="small_object_detection">small_object_detection<a class="headerlink" href="#small_object_detection" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル</td>
+<td>ssd_mobilenet_v2_coco_quant_no_nms_edgetpu</td>
+</tr>
+<tr>
+<td>タイルサイズ</td>
+<td>1352x900, 500x500, 250x250</td>
+</tr>
+<tr>
+<td>検出時間</td>
+<td>922.44 ms</td>
+</tr>
+<tr>
+<td>検出数</td>
+<td>18 オブジェクト（kite: 7, person: 10, backpack: 1）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<h3 id="backprop_last_layer">backprop_last_layer<a class="headerlink" href="#backprop_last_layer" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル</td>
+<td>mobilenet_v1_1.0_224_quant_embedding_extractor_edgetpu</td>
+</tr>
+<tr>
+<td>データセット</td>
+<td>flower_photos（5 クラス × 約 700 枚）</td>
+</tr>
+<tr>
+<td>前処理時間</td>
+<td>38.48 秒</td>
+</tr>
+<tr>
+<td>学習時間</td>
+<td>7.64 秒</td>
+</tr>
+<tr>
+<td>合計時間</td>
+<td>50.34 秒</td>
+</tr>
+<tr>
+<td>テスト精度</td>
+<td>89.65%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="imprinting_learning">imprinting_learning<a class="headerlink" href="#imprinting_learning" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル</td>
+<td>mobilenet_v1_1.0_224_l2norm_quant_edgetpu</td>
+</tr>
+<tr>
+<td>データセット</td>
+<td>open_image_v4_subset（10 カテゴリ × 20 枚）</td>
+</tr>
+<tr>
+<td>学習時間</td>
+<td>36576.60 ms</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Top-k</th>
+<th>精度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top 1</td>
+<td>98%</td>
+</tr>
+<tr>
+<td>Top 2</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Top 3</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Top 4</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Top 5</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 
 
 
