@@ -4,3 +4,5 @@ mkdocs-static-i18n>=1.2
 mendel-development-tool
 ai-edge-litert
 numpy
+tensorflow>=2.15
+Pillow

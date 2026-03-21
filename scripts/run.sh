@@ -23,5 +23,10 @@ IP=$("$SCRIPT_DIR/resolve-ip.sh")
 
 SSH_OPTS=(-i "$MDT_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=5)
 
+# Allocate TTY if stdin is a terminal (enables interactive input over SSH)
+if [ -t 0 ]; then
+    SSH_OPTS+=(-t)
+fi
+
 echo "Running on Coral Dev Board (${IP}): ${CMD}"
 ssh "${SSH_OPTS[@]}" "mendel@${IP}" "${CMD}"
