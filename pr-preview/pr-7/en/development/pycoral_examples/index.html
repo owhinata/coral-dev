@@ -1,0 +1,2118 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Google Coral Dev Board セットアップ・使い方ガイド">
+      
+      
+      
+        <link rel="canonical" href="https://owhinata.github.io/coral-dev/pr-preview/pr-7/en/development/pycoral_examples/">
+      
+      
+        <link rel="prev" href="../pycoral_benchmark/">
+      
+      
+        <link rel="next" href="../../technical/display_image/">
+      
+      
+        
+          <link rel="alternate" href="../../../development/pycoral_examples/" hreflang="ja">
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>PyCoral API Examples - Coral Dev Board Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pycoral-api-examples" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../" title="Coral Dev Board Guide" class="md-header__button md-logo" aria-label="Coral Dev Board Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Coral Dev Board Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              PyCoral API Examples
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="orange"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="orange"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../development/pycoral_examples/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/owhinata/coral-dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Coral Dev Board Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../setup/getting_started/" class="md-tabs__link">
+          
+  
+  
+  Setup
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../hello_world/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../technical/display_image/" class="md-tabs__link">
+          
+  
+  
+  Technical
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../" title="Coral Dev Board Guide" class="md-nav__button md-logo" aria-label="Coral Dev Board Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Coral Dev Board Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/owhinata/coral-dev" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coral Dev Board Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Setup
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/sd_home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Move /home to SD Card
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hello_world/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coremark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CoreMark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pycoral_benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    pycoral Benchmark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyCoral API Examples
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyCoral API Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-deploy-and-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build, Deploy, and Run
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build, Deploy, and Run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#download-models-and-test-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Download Models and Test Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-to-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploy to Board
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-examples-ctest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run Examples (ctest)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-transfer-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Transfer Learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Walkthrough
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Walkthrough">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#image-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semantic-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semantic Segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pose-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pose Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tile-based-small-object-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tile-based Small Object Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transfer-learning-last-layer-backprop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transfer Learning (Last Layer Backprop)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transfer-learning-weight-imprinting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transfer Learning (Weight Imprinting)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmake-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMake Targets / ctest List
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CMake Targets / ctest List">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ctest-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ctest List
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classify_image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        classify_image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detect_image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        detect_image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semantic_segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        semantic_segmentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#movenet_pose_estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        movenet_pose_estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#small_object_detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        small_object_detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backprop_last_layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        backprop_last_layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imprinting_learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        imprinting_learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Technical
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Technical
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical/display_image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Displaying Images
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="pycoral-api-examples">PyCoral API Examples<a class="headerlink" href="#pycoral-api-examples" title="Permanent link">&para;</a></h1>
+<p>A self-contained port of <a href="https://github.com/google-coral/pycoral">pycoral</a> <a href="https://github.com/google-coral/pycoral/tree/master/examples">examples</a>. The purpose is to learn <a href="https://gweb-coral-full.uc.r.appspot.com/docs/reference/py/">PyCoral API</a> usage. It targets 7 examples that can run on a single Edge TPU.</p>
+<table>
+<thead>
+<tr>
+<th>Example</th>
+<th>Description</th>
+<th>Key APIs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>classify_image</td>
+<td>Image classification</td>
+<td><code>classify.get_classes</code>, <code>common.input_size</code>, <code>common.set_input</code></td>
+</tr>
+<tr>
+<td>detect_image</td>
+<td>Object detection</td>
+<td><code>detect.get_objects</code>, <code>common.set_resized_input</code></td>
+</tr>
+<tr>
+<td>semantic_segmentation</td>
+<td>Semantic segmentation</td>
+<td><code>segment.get_output</code>, <code>common.set_resized_input</code></td>
+</tr>
+<tr>
+<td>movenet_pose_estimation</td>
+<td>Pose estimation (17 keypoints)</td>
+<td><code>common.output_tensor</code>, <code>common.set_input</code></td>
+</tr>
+<tr>
+<td>small_object_detection</td>
+<td>Tile-based small object detection + NMS</td>
+<td><code>detect.get_objects</code>, <code>common.set_resized_input</code></td>
+</tr>
+<tr>
+<td>backprop_last_layer</td>
+<td>Transfer learning (last layer backprop)</td>
+<td><code>SoftmaxRegression</code>, <code>classify.get_scores</code></td>
+</tr>
+<tr>
+<td>imprinting_learning</td>
+<td>Transfer learning (weight imprinting)</td>
+<td><code>ImprintingEngine</code>, <code>classify.get_classes</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>CMake 3.16 or later</li>
+<li>Internet connection (only for initial model/test data download)</li>
+<li>pycoral / tflite-runtime installed on Coral Dev Board (pre-installed on Mendel Linux)</li>
+<li><code>python3-opencv</code> installed on the board if using <code>--display</code> flag for image output examples</li>
+</ul>
+<h2 id="build-deploy-and-run">Build, Deploy, and Run<a class="headerlink" href="#build-deploy-and-run" title="Permanent link">&para;</a></h2>
+<h3 id="download-models-and-test-data">Download Models and Test Data<a class="headerlink" href="#download-models-and-test-data" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build/pycoral-examples<span class="w"> </span>-S<span class="w"> </span>apps/pycoral-examples
+</code></pre></div>
+<p>Downloaded files are saved to <code>build/pycoral-examples/data/</code>.</p>
+<h3 id="deploy-to-board">Deploy to Board<a class="headerlink" href="#deploy-to-board" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build/pycoral-examples<span class="w"> </span>--target<span class="w"> </span>deploy
+</code></pre></div>
+<p>Scripts and data are transferred to <code>/home/mendel/work/pycoral-examples/</code> on the board.</p>
+<h3 id="run-examples-ctest">Run Examples (ctest)<a class="headerlink" href="#run-examples-ctest" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Run all examples (excluding transfer-learning)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build/pycoral-examples<span class="w"> </span>-V<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;(backprop|imprinting)&quot;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Classification only</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build/pycoral-examples<span class="w"> </span>-V<span class="w"> </span>-R<span class="w"> </span>classify
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Detection examples only</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build/pycoral-examples<span class="w"> </span>-V<span class="w"> </span>-L<span class="w"> </span>detect
+</code></pre></div>
+<h3 id="running-transfer-learning">Running Transfer Learning<a class="headerlink" href="#running-transfer-learning" title="Permanent link">&para;</a></h3>
+<p>Transfer learning examples require downloading training data to the board first.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># For backprop_last_layer</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build/pycoral-examples<span class="w"> </span>--target<span class="w"> </span>download-flower-photos
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build/pycoral-examples<span class="w"> </span>-V<span class="w"> </span>-R<span class="w"> </span>backprop
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># For imprinting_learning</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>cmake<span class="w"> </span>--build<span class="w"> </span>build/pycoral-examples<span class="w"> </span>--target<span class="w"> </span>download-imprinting-data
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>ctest<span class="w"> </span>--test-dir<span class="w"> </span>build/pycoral-examples<span class="w"> </span>-V<span class="w"> </span>-R<span class="w"> </span>imprinting
+</code></pre></div>
+<hr />
+<h2 id="example-walkthrough">Example Walkthrough<a class="headerlink" href="#example-walkthrough" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:7"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><input id="__tabbed_1_7" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">classify_image</label><label for="__tabbed_1_2">detect_image</label><label for="__tabbed_1_3">semantic_segmentation</label><label for="__tabbed_1_4">movenet_pose_estimation</label><label for="__tabbed_1_5">small_object_detection</label><label for="__tabbed_1_6">backprop_last_layer</label><label for="__tabbed_1_7">imprinting_learning</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<h3 id="image-classification">Image Classification<a class="headerlink" href="#image-classification" title="Permanent link">&para;</a></h3>
+<p>Classifies a bird image with MobileNet V2 and outputs the top-k class labels and scores.</p>
+<p>Source code: <a href="https://github.com/owhinata/coral-dev/blob/99fd61ac/apps/pycoral-examples/src/classify_image.py">classify_image.py</a></p>
+<p><strong>APIs used</strong>: <code>edgetpu.make_interpreter</code>, <code>common.input_size</code>, <code>common.input_details</code>, <code>common.set_input</code>, <code>classify.get_classes</code>, <code>dataset.read_label_file</code></p>
+<p><strong>Processing flow</strong>:</p>
+<ol>
+<li><code>read_label_file()</code> loads the label file</li>
+<li><code>make_interpreter()</code> creates an interpreter with Edge TPU delegate</li>
+<li><code>common.input_size()</code> gets the model's input size, PIL resizes the image</li>
+<li>Check quantization parameters to determine if preprocessing is needed</li>
+<li><code>common.set_input()</code> sets data to the input tensor</li>
+<li><code>interpreter.invoke()</code> runs inference (1st run includes model load)</li>
+<li><code>classify.get_classes()</code> retrieves classification results</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 1. Load labels</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">read_label_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">labels</span> <span class="k">else</span> <span class="p">{}</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 2. Create Edge TPU interpreter</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">interpreter</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># 3. Get input size and resize image</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">if</span> <span class="n">common</span><span class="o">.</span><span class="n">input_details</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="s1">&#39;dtype&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">:</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Only support uint8 input type.&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">size</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">input_size</span><span class="p">(</span><span class="n">interpreter</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">LANCZOS</span><span class="p">)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="c1"># 4. Check quantization parameters</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">params</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">input_details</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="s1">&#39;quantization_parameters&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="n">scale</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;scales&#39;</span><span class="p">]</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">zero_point</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;zero_points&#39;</span><span class="p">]</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="c1"># 5. Set input tensor (determine if preprocessing is needed)</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">scale</span> <span class="o">*</span> <span class="mf">128.0</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-5</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="mf">128.0</span> <span class="o">-</span> <span class="n">zero_point</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-5</span><span class="p">:</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="n">common</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>  <span class="c1"># No preprocessing needed</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>    <span class="n">normalized</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span> <span class="o">-</span> <span class="mf">128.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">128.0</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span> <span class="o">+</span> <span class="n">zero_point</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">normalized</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">normalized</span><span class="p">)</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>    <span class="n">common</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">normalized</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">))</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="c1"># 6. Run inference</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="c1"># 7. Get classification results</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="n">classes</span> <span class="o">=</span> <span class="n">classify</span><span class="o">.</span><span class="n">get_classes</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">top_k</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">threshold</span><span class="p">)</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<h3 id="object-detection">Object Detection<a class="headerlink" href="#object-detection" title="Permanent link">&para;</a></h3>
+<p>Detects objects in an image and draws bounding boxes with labels.</p>
+<p>Source code: <a href="https://github.com/owhinata/coral-dev/blob/99fd61ac/apps/pycoral-examples/src/detect_image.py">detect_image.py</a></p>
+<p><strong>APIs used</strong>: <code>edgetpu.make_interpreter</code>, <code>common.set_resized_input</code>, <code>detect.get_objects</code>, <code>dataset.read_label_file</code></p>
+<p><strong>Processing flow</strong>:</p>
+<ol>
+<li><code>read_label_file()</code> loads the label file</li>
+<li><code>make_interpreter()</code> creates the interpreter</li>
+<li><code>common.set_resized_input()</code> resizes the image to model input size while returning the scale factor</li>
+<li><code>interpreter.invoke()</code> runs inference</li>
+<li><code>detect.get_objects()</code> retrieves detection results above the score threshold</li>
+<li>OpenCV draws bounding boxes</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 1. Load labels</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">read_label_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">labels</span> <span class="k">else</span> <span class="p">{}</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 2. Create Edge TPU interpreter</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">interpreter</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># 3. set_resized_input handles resize and scale calculation in one call</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">_</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">set_resized_input</span><span class="p">(</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="n">interpreter</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="k">lambda</span> <span class="n">size</span><span class="p">:</span> <span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">LANCZOS</span><span class="p">))</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1"># 4. Run inference</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="c1"># 5. Get detection results</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="n">objs</span> <span class="o">=</span> <span class="n">detect</span><span class="o">.</span><span class="n">get_objects</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  id:    </span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  score: </span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">score</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  bbox:  </span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">bbox</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="c1"># 6. Draw bounding boxes with OpenCV</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="n">result</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2BGR</span><span class="p">)</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>    <span class="n">bbox</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">bbox</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>    <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="n">bbox</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">ymin</span><span class="p">),</span> <span class="p">(</span><span class="n">bbox</span><span class="o">.</span><span class="n">xmax</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">ymax</span><span class="p">),</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>                  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>    <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>    <span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="n">bbox</span><span class="o">.</span><span class="n">xmin</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">ymin</span> <span class="o">+</span> <span class="mi">16</span><span class="p">),</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>                <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_SIMPLEX</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>Use <code>--output</code> to save result images and <code>--display</code> to show on HDMI display.</p>
+</div>
+<div class="tabbed-block">
+<h3 id="semantic-segmentation">Semantic Segmentation<a class="headerlink" href="#semantic-segmentation" title="Permanent link">&para;</a></h3>
+<p>Uses DeepLab V3 to estimate per-pixel classes and visualize with PASCAL VOC colormap.</p>
+<p>Source code: <a href="https://github.com/owhinata/coral-dev/blob/99fd61ac/apps/pycoral-examples/src/semantic_segmentation.py">semantic_segmentation.py</a></p>
+<p><strong>APIs used</strong>: <code>edgetpu.make_interpreter</code>, <code>common.input_size</code>, <code>common.set_resized_input</code>, <code>common.set_input</code>, <code>segment.get_output</code></p>
+<p><strong>Processing flow</strong>:</p>
+<ol>
+<li><code>make_interpreter()</code> creates the interpreter</li>
+<li><code>common.input_size()</code> gets the model input size</li>
+<li>With <code>--keep_aspect_ratio</code>, <code>set_resized_input()</code> maintains aspect ratio; otherwise uses <code>set_input()</code></li>
+<li><code>interpreter.invoke()</code> runs inference</li>
+<li><code>segment.get_output()</code> retrieves segmentation results</li>
+<li>PASCAL VOC colormap assigns colors to each class</li>
+<li>Input image and mask are concatenated side-by-side</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># 1. Create Edge TPU interpreter</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">interpreter</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;:0&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># 2. Get input size</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">input_size</span><span class="p">(</span><span class="n">interpreter</span><span class="p">)</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># 3. Resize and set input image</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">keep_aspect_ratio</span><span class="p">:</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>    <span class="n">resized_img</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">set_resized_input</span><span class="p">(</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="n">interpreter</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>        <span class="k">lambda</span> <span class="n">size</span><span class="p">:</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">LANCZOS</span><span class="p">))</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>    <span class="n">resized_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">LANCZOS</span><span class="p">)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="n">common</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">resized_img</span><span class="p">)</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="c1"># 4. Run inference</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="c1"># 5. Get segmentation results</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="n">result</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get_output</span><span class="p">(</span><span class="n">interpreter</span><span class="p">)</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="c1"># 6. Apply PASCAL VOC colormap</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="n">new_width</span><span class="p">,</span> <span class="n">new_height</span> <span class="o">=</span> <span class="n">resized_img</span><span class="o">.</span><span class="n">size</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[:</span><span class="n">new_height</span><span class="p">,</span> <span class="p">:</span><span class="n">new_width</span><span class="p">]</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="n">colormap</span> <span class="o">=</span> <span class="n">create_pascal_label_colormap</span><span class="p">()</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="n">mask</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">[</span><span class="n">result</span><span class="p">]</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="c1"># 7. Concatenate input image and mask side-by-side</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="n">resized_bgr</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">resized_img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)),</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>                            <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2BGR</span><span class="p">)</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="n">mask_bgr</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2BGR</span><span class="p">)</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="n">output_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">resized_bgr</span><span class="p">,</span> <span class="n">mask_bgr</span><span class="p">])</span>
+</code></pre></div>
+<p>Use <code>--output</code> to save result images and <code>--display</code> to show on HDMI display.</p>
+</div>
+<div class="tabbed-block">
+<h3 id="pose-estimation">Pose Estimation<a class="headerlink" href="#pose-estimation" title="Permanent link">&para;</a></h3>
+<p>Estimates 17 human body keypoints using MoveNet and draws the skeleton.</p>
+<p>Source code: <a href="https://github.com/owhinata/coral-dev/blob/99fd61ac/apps/pycoral-examples/src/movenet_pose_estimation.py">movenet_pose_estimation.py</a></p>
+<p><strong>APIs used</strong>: <code>edgetpu.make_interpreter</code>, <code>common.input_size</code>, <code>common.set_input</code>, <code>common.output_tensor</code></p>
+<p><strong>Processing flow</strong>:</p>
+<ol>
+<li><code>make_interpreter()</code> creates the interpreter</li>
+<li><code>common.input_size()</code> gets input size and resizes the image with PIL</li>
+<li><code>common.set_input()</code> sets the resized image</li>
+<li><code>interpreter.invoke()</code> runs inference</li>
+<li><code>common.output_tensor()</code> retrieves the output tensor (17 x 3: y, x, score)</li>
+<li>Keypoints and skeleton connections are drawn with OpenCV</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># 1. Create Edge TPU interpreter</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">interpreter</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># 2-3. Get input size, resize, and set input</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">resized_img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">common</span><span class="o">.</span><span class="n">input_size</span><span class="p">(</span><span class="n">interpreter</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">LANCZOS</span><span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">common</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">resized_img</span><span class="p">)</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># 4. Run inference</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># 5. Get output tensor (17 keypoints x [y, x, score])</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">pose</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">output_tensor</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="c1"># pose[i] = [y, x, score] (normalized coordinates 0.0-1.0)</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c1"># 6. Draw skeleton</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="n">_SKELETON</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>       <span class="c1"># head</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>                                  <span class="c1"># shoulders</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>        <span class="c1"># arms</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>    <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>                        <span class="c1"># torso</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>    <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>                                <span class="c1"># hips</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>    <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span> <span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>  <span class="c1"># legs</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="p">]</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="n">result</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2BGR</span><span class="p">)</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">_SKELETON</span><span class="p">:</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>    <span class="k">if</span> <span class="n">pose</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.2</span> <span class="ow">and</span> <span class="n">pose</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">:</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>        <span class="n">y1</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pose</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">pose</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">)</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>        <span class="n">y2</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pose</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">pose</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">)</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>        <span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">17</span><span class="p">):</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>    <span class="k">if</span> <span class="n">pose</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.2</span><span class="p">:</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>        <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pose</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">h</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">pose</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">)</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>        <span class="n">cv2</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>17 keypoints: nose, left_eye, right_eye, left_ear, right_ear, left_shoulder, right_shoulder, left_elbow, right_elbow, left_wrist, right_wrist, left_hip, right_hip, left_knee, right_knee, left_ankle, right_ankle</p>
+<p>Use <code>--output</code> to save result images and <code>--display</code> to show on HDMI display.</p>
+</div>
+<div class="tabbed-block">
+<h3 id="tile-based-small-object-detection">Tile-based Small Object Detection<a class="headerlink" href="#tile-based-small-object-detection" title="Permanent link">&para;</a></h3>
+<p>Splits a large image into tiles of multiple sizes for detection, then applies NMS to remove duplicates. Uses a no-NMS model (<code>_no_nms</code>) with custom post-processing for ~2x speedup.</p>
+<p>Source code: <a href="https://github.com/owhinata/coral-dev/blob/99fd61ac/apps/pycoral-examples/src/small_object_detection.py">small_object_detection.py</a></p>
+<p><strong>APIs used</strong>: <code>edgetpu.make_interpreter</code>, <code>common.set_resized_input</code>, <code>detect.get_objects</code>, <code>dataset.read_label_file</code></p>
+<p><strong>Processing flow</strong>:</p>
+<ol>
+<li><code>make_interpreter()</code> creates the interpreter, <code>read_label_file()</code> loads labels</li>
+<li>Loop over multiple tile sizes specified by <code>--tile_sizes</code></li>
+<li>Crop each tile and feed to model via <code>set_resized_input()</code></li>
+<li><code>detect.get_objects()</code> retrieves detection results</li>
+<li>Remap detection BBox from tile coordinates to original image coordinates</li>
+<li>Apply NMS (Non-Maximum Suppression) per label</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># 1. Create interpreter and load labels</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">interpreter</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">read_label_file</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">labels</span> <span class="k">else</span> <span class="p">{}</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">img_size</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">tile_sizes</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">ts</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)))</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">tile_sizes</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="p">]</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1"># 2-5. Detect per tile, remap BBox to original image coordinates</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">objects_by_label</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="k">for</span> <span class="n">tile_size</span> <span class="ow">in</span> <span class="n">tile_sizes</span><span class="p">:</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="k">for</span> <span class="n">tile_location</span> <span class="ow">in</span> <span class="n">tiles_location_gen</span><span class="p">(</span><span class="n">img_size</span><span class="p">,</span> <span class="n">tile_size</span><span class="p">,</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>                                            <span class="n">args</span><span class="o">.</span><span class="n">tile_overlap</span><span class="p">):</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>        <span class="n">tile</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">tile_location</span><span class="p">)</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>        <span class="n">_</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">set_resized_input</span><span class="p">(</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>            <span class="n">interpreter</span><span class="p">,</span> <span class="n">tile</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>            <span class="k">lambda</span> <span class="n">size</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tile</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">))</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>        <span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>        <span class="n">objs</span> <span class="o">=</span> <span class="n">detect</span><span class="o">.</span><span class="n">get_objects</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">score_threshold</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>            <span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">ymin</span><span class="p">,</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>                    <span class="n">obj</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">xmax</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">ymax</span><span class="p">]</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>            <span class="c1"># Remap tile coordinates to original image coordinates</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>            <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tile_location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>            <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tile_location</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>            <span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tile_location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>            <span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">tile_location</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>            <span class="n">label</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a>            <span class="n">objects_by_label</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a>                <span class="n">Object</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="n">bbox</span><span class="p">))</span>
+<a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a>
+<a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a><span class="c1"># 6. Apply NMS per label</span>
+<a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="n">all_objects</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a><span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">objects</span> <span class="ow">in</span> <span class="n">objects_by_label</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a>    <span class="n">idxs</span> <span class="o">=</span> <span class="n">non_max_suppression</span><span class="p">(</span><span class="n">objects</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">iou_threshold</span><span class="p">)</span>
+<a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a>    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idxs</span><span class="p">:</span>
+<a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a>        <span class="n">all_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+</code></pre></div>
+<p>Use <code>--output</code> to save result images and <code>--display</code> to show on HDMI display.</p>
+</div>
+<div class="tabbed-block">
+<h3 id="transfer-learning-last-layer-backprop">Transfer Learning (Last Layer Backprop)<a class="headerlink" href="#transfer-learning-last-layer-backprop" title="Permanent link">&para;</a></h3>
+<p>Extracts features with an embedding extractor and trains the last layer using SoftmaxRegression. Uses the flower photos dataset.</p>
+<p>Source code: <a href="https://github.com/owhinata/coral-dev/blob/99fd61ac/apps/pycoral-examples/src/backprop_last_layer.py">backprop_last_layer.py</a></p>
+<p><strong>APIs used</strong>: <code>edgetpu.make_interpreter</code>, <code>common.input_size</code>, <code>common.set_input</code>, <code>classify.get_scores</code>, <code>classify.num_classes</code>, <code>SoftmaxRegression</code></p>
+<p><strong>Processing flow</strong>:</p>
+<ol>
+<li><code>get_image_paths()</code> extracts image paths and labels from subdirectory structure</li>
+<li><code>shuffle_and_split()</code> splits data into train / val / test sets</li>
+<li><code>make_interpreter()</code> creates the embedding extractor interpreter</li>
+<li>Extract feature vectors for all images using <code>classify.get_scores()</code></li>
+<li>Train the last layer with <code>SoftmaxRegression</code> using SGD (500 iterations)</li>
+<li><code>model.serialize_model()</code> combines trained weights with the original model and saves</li>
+<li>Verify accuracy on test data with the saved model</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 1-2. Load data and split</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">image_paths</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">label_map</span> <span class="o">=</span> <span class="n">get_image_paths</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">train_and_val</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">shuffle_and_split</span><span class="p">(</span><span class="n">image_paths</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># 3. Create embedding extractor interpreter</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">interpreter</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;:0&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c1"># 4. Extract feature vectors</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">input_size</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">input_size</span><span class="p">(</span><span class="n">interpreter</span><span class="p">)</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="n">feature_dim</span> <span class="o">=</span> <span class="n">classify</span><span class="o">.</span><span class="n">num_classes</span><span class="p">(</span><span class="n">interpreter</span><span class="p">)</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="n">embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">image_paths</span><span class="p">),</span> <span class="n">feature_dim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">image_paths</span><span class="p">):</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>    <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">)</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>        <span class="n">common</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>        <span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>        <span class="n">embeddings</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">classify</span><span class="o">.</span><span class="n">get_scores</span><span class="p">(</span><span class="n">interpreter</span><span class="p">)</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="c1"># 5. Train last layer with SoftmaxRegression</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="n">feature_dim</span> <span class="o">=</span> <span class="n">train_and_val</span><span class="p">[</span><span class="s1">&#39;data_train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="n">num_classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">train_and_val</span><span class="p">[</span><span class="s1">&#39;labels_train&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="n">model</span> <span class="o">=</span> <span class="n">SoftmaxRegression</span><span class="p">(</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>    <span class="n">feature_dim</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">weight_scale</span><span class="o">=</span><span class="mf">5e-2</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="n">model</span><span class="o">.</span><span class="n">train_with_sgd</span><span class="p">(</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>    <span class="n">train_and_val</span><span class="p">,</span> <span class="n">num_iter</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="c1"># 6. Combine trained weights with original model and save</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="n">out_model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;retrained_model_edgetpu.tflite&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_model_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">serialize_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">))</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="c1"># 7. Verify accuracy on test data</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a><span class="n">retrained_interpreter</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span><span class="n">out_model_path</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;:0&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a><span class="n">retrained_interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="n">test_embeddings</span> <span class="o">=</span> <span class="n">extract_embeddings</span><span class="p">(</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a>    <span class="n">test_data</span><span class="p">[</span><span class="s1">&#39;data_test&#39;</span><span class="p">],</span> <span class="n">retrained_interpreter</span><span class="p">)</span>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="n">accuracy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a>    <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">test_embeddings</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">test_data</span><span class="p">[</span><span class="s1">&#39;labels_test&#39;</span><span class="p">])</span>
+</code></pre></div>
+<p><strong>Training data</strong>: Download to board via the <code>download-flower-photos</code> target (flower_photos: 5 classes x ~700 images)</p>
+</div>
+<div class="tabbed-block">
+<h3 id="transfer-learning-weight-imprinting">Transfer Learning (Weight Imprinting)<a class="headerlink" href="#transfer-learning-weight-imprinting" title="Permanent link">&para;</a></h3>
+<p>Adds new classes via weight imprinting. Fast learning without backpropagation.</p>
+<p>Source code: <a href="https://github.com/owhinata/coral-dev/blob/99fd61ac/apps/pycoral-examples/src/imprinting_learning.py">imprinting_learning.py</a></p>
+<p><strong>APIs used</strong>: <code>ImprintingEngine</code>, <code>edgetpu.make_interpreter</code>, <code>common.input_size</code>, <code>common.set_input</code>, <code>classify.get_scores</code>, <code>classify.get_classes</code></p>
+<p><strong>Processing flow</strong>:</p>
+<ol>
+<li><code>ImprintingEngine</code> generates an extractor from the model</li>
+<li><code>make_interpreter()</code> creates the extractor interpreter</li>
+<li><code>read_data()</code> splits the dataset into train / test sets</li>
+<li>Extract feature vectors from training images using <code>classify.get_scores()</code> and update weights via <code>engine.train()</code></li>
+<li><code>engine.serialize_model()</code> saves the trained model</li>
+<li>Evaluate Top-1 through Top-5 accuracy using <code>classify.get_classes()</code> with the saved model</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># 1. Generate extractor from model via ImprintingEngine</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">ImprintingEngine</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> <span class="n">keep_classes</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">keep_classes</span><span class="p">)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># 2. Create extractor interpreter</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">extractor</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="n">engine</span><span class="o">.</span><span class="n">serialize_extractor_model</span><span class="p">(),</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;:0&#39;</span><span class="p">)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">extractor</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">shape</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">input_size</span><span class="p">(</span><span class="n">extractor</span><span class="p">)</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1"># 3. Split dataset</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">test_ratio</span><span class="p">)</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1"># 4. Extract features and update weights</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="n">num_classes</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">num_classes</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="k">for</span> <span class="n">class_id</span><span class="p">,</span> <span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">image_list</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_set</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>    <span class="n">images</span> <span class="o">=</span> <span class="n">prepare_images</span><span class="p">(</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>        <span class="n">image_list</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">category</span><span class="p">),</span> <span class="n">shape</span><span class="p">)</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>    <span class="k">for</span> <span class="n">tensor</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>        <span class="n">common</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">extractor</span><span class="p">,</span> <span class="n">tensor</span><span class="p">)</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>        <span class="n">extractor</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>        <span class="n">embedding</span> <span class="o">=</span> <span class="n">classify</span><span class="o">.</span><span class="n">get_scores</span><span class="p">(</span><span class="n">extractor</span><span class="p">)</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>        <span class="n">engine</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span> <span class="n">class_id</span><span class="o">=</span><span class="n">num_classes</span> <span class="o">+</span> <span class="n">class_id</span><span class="p">)</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="c1"># 5. Save trained model</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">serialize_model</span><span class="p">())</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="c1"># 6. Evaluate accuracy with saved model</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="n">interpreter</span> <span class="o">=</span> <span class="n">make_interpreter</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="n">interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="n">size</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">input_size</span><span class="p">(</span><span class="n">interpreter</span><span class="p">)</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">image_list</span> <span class="ow">in</span> <span class="n">test_set</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>    <span class="k">for</span> <span class="n">img_name</span> <span class="ow">in</span> <span class="n">image_list</span><span class="p">:</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">img_name</span><span class="p">))</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a>        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">NEAREST</span><span class="p">)</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>        <span class="n">common</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a>        <span class="n">interpreter</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>        <span class="n">candidates</span> <span class="o">=</span> <span class="n">classify</span><span class="o">.</span><span class="n">get_classes</span><span class="p">(</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a>            <span class="n">interpreter</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">score_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Training data</strong>: Download to board via the <code>download-imprinting-data</code> target (open_image_v4_subset: 10 categories x 20 images)</p>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="cmake-targets">CMake Targets / ctest List<a class="headerlink" href="#cmake-targets" title="Permanent link">&para;</a></h2>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>cmake<span class="w"> </span>-B<span class="w"> </span>build/pycoral-examples<span class="w"> </span>-S<span class="w"> </span>apps/pycoral-examples
+</code></pre></div>
+<h3 id="target-list">Target List<a class="headerlink" href="#target-list" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deploy</code></td>
+<td><code>cmake --build build/pycoral-examples --target deploy</code></td>
+<td>Transfer scripts + data to board</td>
+</tr>
+<tr>
+<td><code>download-flower-photos</code></td>
+<td><code>cmake --build build/pycoral-examples --target download-flower-photos</code></td>
+<td>Download flower_photos dataset on board</td>
+</tr>
+<tr>
+<td><code>download-imprinting-data</code></td>
+<td><code>cmake --build build/pycoral-examples --target download-imprinting-data</code></td>
+<td>Download imprinting dataset on board</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ctest-list">ctest List<a class="headerlink" href="#ctest-list" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Test Name</th>
+<th>Labels</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classify-image</code></td>
+<td><code>edgetpu</code>, <code>classify</code></td>
+<td>Image classification</td>
+</tr>
+<tr>
+<td><code>detect-image</code></td>
+<td><code>edgetpu</code>, <code>detect</code></td>
+<td>Object detection</td>
+</tr>
+<tr>
+<td><code>semantic-segmentation</code></td>
+<td><code>edgetpu</code>, <code>segmentation</code></td>
+<td>Semantic segmentation</td>
+</tr>
+<tr>
+<td><code>movenet-pose</code></td>
+<td><code>edgetpu</code>, <code>pose</code></td>
+<td>Pose estimation</td>
+</tr>
+<tr>
+<td><code>small-object-detection</code></td>
+<td><code>edgetpu</code>, <code>detect</code></td>
+<td>Tile-based small object detection</td>
+</tr>
+<tr>
+<td><code>backprop-last-layer</code></td>
+<td><code>edgetpu</code>, <code>transfer-learning</code></td>
+<td>Transfer learning (backprop)</td>
+</tr>
+<tr>
+<td><code>imprinting-learning</code></td>
+<td><code>edgetpu</code>, <code>transfer-learning</code></td>
+<td>Transfer learning (imprinting)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="connection-settings">Connection Settings<a class="headerlink" href="#connection-settings" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CORAL_IP</code></td>
+<td>(empty = auto-detect via mdt)</td>
+<td>Coral Dev Board IP address</td>
+</tr>
+</tbody>
+</table>
+<h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Inference</label><label for="__tabbed_2_2">Transfer Learning</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<h3 id="classify_image">classify_image<a class="headerlink" href="#classify_image" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>mobilenet_v2_1.0_224_inat_bird_quant_edgetpu</td>
+</tr>
+<tr>
+<td>1st inference (includes model load)</td>
+<td>14.70 ms</td>
+</tr>
+<tr>
+<td>2nd inference</td>
+<td>3.37 ms</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ara macao (Scarlet Macaw)</td>
+<td>0.75781</td>
+</tr>
+<tr>
+<td>Platycercus elegans (Crimson Rosella)</td>
+<td>0.07422</td>
+</tr>
+<tr>
+<td>Coracias caudatus (Lilac-breasted Roller)</td>
+<td>0.01562</td>
+</tr>
+</tbody>
+</table>
+<h3 id="detect_image">detect_image<a class="headerlink" href="#detect_image" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>ssd_mobilenet_v2_coco_quant_postprocess_edgetpu</td>
+</tr>
+<tr>
+<td>1st inference (includes model load)</td>
+<td>36.96 ms</td>
+</tr>
+<tr>
+<td>2nd inference</td>
+<td>12.58 ms</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Score</th>
+<th>BBox</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tie</td>
+<td>0.840</td>
+<td>(227, 419, 292, 541)</td>
+</tr>
+<tr>
+<td>person</td>
+<td>0.805</td>
+<td>(2, 4, 513, 595)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="semantic_segmentation">semantic_segmentation<a class="headerlink" href="#semantic_segmentation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>deeplabv3_mnv2_pascal_quant_edgetpu</td>
+</tr>
+<tr>
+<td>1st inference (includes model load)</td>
+<td>223.14 ms</td>
+</tr>
+<tr>
+<td>2nd inference</td>
+<td>220.26 ms</td>
+</tr>
+</tbody>
+</table>
+<h3 id="movenet_pose_estimation">movenet_pose_estimation<a class="headerlink" href="#movenet_pose_estimation" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>movenet_single_pose_lightning_ptq_edgetpu</td>
+</tr>
+<tr>
+<td>1st inference (includes model load)</td>
+<td>29.12 ms</td>
+</tr>
+<tr>
+<td>2nd inference</td>
+<td>26.90 ms</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Keypoint</th>
+<th>Coordinates (x, y)</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nose</td>
+<td>(0.578, 0.332)</td>
+<td>0.500</td>
+</tr>
+<tr>
+<td>left_eye</td>
+<td>(0.590, 0.320)</td>
+<td>0.635</td>
+</tr>
+<tr>
+<td>right_eye</td>
+<td>(0.565, 0.311)</td>
+<td>0.701</td>
+</tr>
+<tr>
+<td>left_shoulder</td>
+<td>(0.578, 0.422)</td>
+<td>0.635</td>
+</tr>
+<tr>
+<td>right_shoulder</td>
+<td>(0.418, 0.414)</td>
+<td>0.500</td>
+</tr>
+<tr>
+<td>left_hip</td>
+<td>(0.389, 0.598)</td>
+<td>0.754</td>
+</tr>
+<tr>
+<td>right_hip</td>
+<td>(0.287, 0.615)</td>
+<td>0.430</td>
+</tr>
+<tr>
+<td>left_ankle</td>
+<td>(0.512, 0.848)</td>
+<td>0.635</td>
+</tr>
+<tr>
+<td>right_ankle</td>
+<td>(0.340, 0.889)</td>
+<td>0.701</td>
+</tr>
+</tbody>
+</table>
+<h3 id="small_object_detection">small_object_detection<a class="headerlink" href="#small_object_detection" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>ssd_mobilenet_v2_coco_quant_no_nms_edgetpu</td>
+</tr>
+<tr>
+<td>Tile sizes</td>
+<td>1352x900, 500x500, 250x250</td>
+</tr>
+<tr>
+<td>Detection time</td>
+<td>922.44 ms</td>
+</tr>
+<tr>
+<td>Detected</td>
+<td>18 objects (kite: 7, person: 10, backpack: 1)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tabbed-block">
+<h3 id="backprop_last_layer">backprop_last_layer<a class="headerlink" href="#backprop_last_layer" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>mobilenet_v1_1.0_224_quant_embedding_extractor_edgetpu</td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td>flower_photos (5 classes x ~700 images)</td>
+</tr>
+<tr>
+<td>Preprocessing time</td>
+<td>38.48 sec</td>
+</tr>
+<tr>
+<td>Training time</td>
+<td>7.64 sec</td>
+</tr>
+<tr>
+<td>Total time</td>
+<td>50.34 sec</td>
+</tr>
+<tr>
+<td>Test accuracy</td>
+<td>89.65%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="imprinting_learning">imprinting_learning<a class="headerlink" href="#imprinting_learning" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>mobilenet_v1_1.0_224_l2norm_quant_edgetpu</td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td>open_image_v4_subset (10 categories x 20 images)</td>
+</tr>
+<tr>
+<td>Training time</td>
+<td>36576.60 ms</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Top-k</th>
+<th>Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Top 1</td>
+<td>98%</td>
+</tr>
+<tr>
+<td>Top 2</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Top 3</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Top 4</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Top 5</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
