@@ -1,6 +1,6 @@
-# pycoral Examples
+# PyCoral API Examples
 
-[pycoral](https://github.com/google-coral/pycoral) の [examples](https://github.com/google-coral/pycoral/tree/master/examples) を自己完結型で移植したアプリです。pycoral API の使い方を学ぶことが目的で、Edge TPU 1 つで実行可能な 7 つの example を対象としています。
+[pycoral](https://github.com/google-coral/pycoral) の [examples](https://github.com/google-coral/pycoral/tree/master/examples) を自己完結型で移植したアプリです。[PyCoral API](https://gweb-coral-full.uc.r.appspot.com/docs/reference/py/) の使い方を学ぶことが目的で、Edge TPU 1 つで実行可能な 7 つの example を対象としています。
 
 | Example | 内容 | 主要 API |
 |---------|------|----------|

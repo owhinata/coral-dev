@@ -1,6 +1,6 @@
-# pycoral Examples
+# PyCoral API Examples
 
-A self-contained port of [pycoral](https://github.com/google-coral/pycoral) [examples](https://github.com/google-coral/pycoral/tree/master/examples). The purpose is to learn pycoral API usage. It targets 7 examples that can run on a single Edge TPU.
+A self-contained port of [pycoral](https://github.com/google-coral/pycoral) [examples](https://github.com/google-coral/pycoral/tree/master/examples). The purpose is to learn [PyCoral API](https://gweb-coral-full.uc.r.appspot.com/docs/reference/py/) usage. It targets 7 examples that can run on a single Edge TPU.
 
 | Example | Description | Key APIs |
 |---------|-------------|----------|
