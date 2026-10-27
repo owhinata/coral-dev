@@ -1,0 +1,54 @@
+From 385ac171fa17be8ae2a63a4cb2949ad182872909 Mon Sep 17 00:00:00 2001
+From: "Katsumi.Ouwa" <d2p.yggdrasill@gmail.com>
+Date: Tue, 27 Oct 2026 14:40:55 +0900
+Subject: [PATCH 5/7] arm64: dts: imx8mq-phanbell: pin OTG port to peripheral,
+ provide Wi-Fi MAC to ath10k
+
+---
+ .../boot/dts/freescale/imx8mq-phanbell.dts    | 22 +++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+index b16ddf8f3..2e388c8ff 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+@@ -376,6 +376,20 @@ &pcie0 {
+ 	status = "okay";
+ };
+ 
++/*
++ * QCA6174 behind PCIe0. Mendel provisions the Wi-Fi MAC from userspace; the
++ * NetworkManager profiles on the Mendel rootfs are bound to that address, so
++ * provide it to ath10k here (device_get_mac_address()).
++ */
++&pcie0_port0 {
++	wifi@0,0 {
++		compatible = "pci168c,003e";
++		/* bus 1 (behind the root port), device 0, function 0 */
++		reg = <0x10000 0x0 0x0 0x0 0x0>;
++		local-mac-address = [7c d9 5c b2 2d 9d];
++	};
++};
++
+ /* PCIe1: on-SoM Edge TPU (1ac1:089a), external 100 MHz refclk, Gen2 */
+ &pcie1 {
+ 	pinctrl-names = "default";
+@@ -411,9 +425,13 @@ typec_ptn5150: typec@3d {
+ 	};
+ };
+ 
++/*
++ * The USB-C OTG port is used as a device (mdt USB networking, as on Mendel).
++ * With a C-to-C cable to a DRP host the PTN5150 may resolve to the host role,
++ * so pin dwc3 to peripheral; the PTN5150 still handles CC orientation.
++ */
+ &usb_dwc3_0 {
+-	dr_mode = "otg";
+-	extcon = <&typec_ptn5150>;
++	dr_mode = "peripheral";
+ 	status = "okay";
+ };
+ 
+-- 
+2.43.0
+

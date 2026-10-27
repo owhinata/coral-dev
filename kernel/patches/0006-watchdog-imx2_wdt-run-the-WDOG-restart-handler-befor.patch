@@ -1,0 +1,31 @@
+From 395205581f628cca69adc0890a7c5c46f304b717 Mon Sep 17 00:00:00 2001
+From: "Katsumi.Ouwa" <d2p.yggdrasill@gmail.com>
+Date: Tue, 27 Oct 2026 14:55:57 +0900
+Subject: [PATCH 6/7] watchdog: imx2_wdt: run the WDOG restart handler before
+ PSCI (Coral Dev Board ATF hangs in SYSTEM_RESET)
+
+---
+ drivers/watchdog/imx2_wdt.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/watchdog/imx2_wdt.c b/drivers/watchdog/imx2_wdt.c
+index 4b3a192ee..378babac5 100644
+--- a/drivers/watchdog/imx2_wdt.c
++++ b/drivers/watchdog/imx2_wdt.c
+@@ -342,7 +342,12 @@ static int __init imx2_wdt_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, wdog);
+ 	watchdog_set_drvdata(wdog, wdev);
+ 	watchdog_set_nowayout(wdog, nowayout);
+-	watchdog_set_restart_priority(wdog, 128);
++	/*
++	 * Coral Dev Board: the PSCI SYSTEM_RESET of the shipped ATF never
++	 * returns and the board stays hung, so let the WDOG restart handler
++	 * run before the PSCI one (priority 129).
++	 */
++	watchdog_set_restart_priority(wdog, 192);
+ 	watchdog_init_timeout(wdog, timeout, dev);
+ 	if (wdev->no_ping)
+ 		watchdog_stop_ping_on_suspend(wdog);
+-- 
+2.43.0
+

@@ -1,0 +1,144 @@
+From bfa73b3b716962aa3f6b9dc947eef893f9ecca72 Mon Sep 17 00:00:00 2001
+From: "Katsumi.Ouwa" <d2p.yggdrasill@gmail.com>
+Date: Tue, 27 Oct 2026 13:53:52 +0900
+Subject: [PATCH 3/7] PCI: imx6: honour fsl,refclk-pad-mode on i.MX8MQ; arm64:
+ dts: imx8mq-phanbell: enable Wi-Fi PCIe with internal refclk
+
+---
+ arch/arm64/boot/dts/freescale/Makefile        |  1 +
+ .../dts/freescale/imx8mq-phanbell-tpuonly.dts |  7 +++++
+ .../boot/dts/freescale/imx8mq-phanbell.dts    | 31 +++++++++++++++----
+ drivers/pci/controller/dwc/pci-imx6.c         | 17 ++++++++--
+ 4 files changed, 48 insertions(+), 8 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/freescale/imx8mq-phanbell-tpuonly.dts
+
+diff --git a/arch/arm64/boot/dts/freescale/Makefile b/arch/arm64/boot/dts/freescale/Makefile
+index 06358d855..c83d73803 100644
+--- a/arch/arm64/boot/dts/freescale/Makefile
++++ b/arch/arm64/boot/dts/freescale/Makefile
+@@ -562,6 +562,7 @@ dtb-$(CONFIG_ARCH_MXC) += imx8mq-mnt-reform2.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-nitrogen.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-phanbell.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-phanbell-nopcie.dtb
++dtb-$(CONFIG_ARCH_MXC) += imx8mq-phanbell-tpuonly.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-pico-pi.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-thor96.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-zii-ultra-rmb3.dtb
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-phanbell-tpuonly.dts b/arch/arm64/boot/dts/freescale/imx8mq-phanbell-tpuonly.dts
+new file mode 100644
+index 000000000..dbd49120f
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/imx8mq-phanbell-tpuonly.dts
+@@ -0,0 +1,7 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/* Coral Dev Board (Phanbell) bring-up variant: Edge TPU PCIe only, Wi-Fi PCIe disabled. */
++#include "imx8mq-phanbell.dts"
++
++&pcie0 {
++	status = "disabled";
++};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+index d073489d2..e7d88e4b0 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+@@ -7,6 +7,7 @@
+ 
+ #include "imx8mq.dtsi"
+ #include <dt-bindings/interrupt-controller/irq.h>
++#include <dt-bindings/phy/phy-imx8-pcie.h>
+ 
+ / {
+ 	model = "Google i.MX8MQ Phanbell";
+@@ -343,20 +344,36 @@ &usdhc2 {
+ };
+ 
+ /*
+- * PCIe0: QCA6174 Wi-Fi/BT module (Gen1). The Google kernel drives this PHY from
+- * the internal PLL (ext_osc = 0), but mainline imx8mq_pcie_init_phy() assumes
+- * an external oscillator (REF_USE_PAD). Enabling this port on Linux 7.3 hangs
+- * the system during PCIe probe (AXI stall), so keep it disabled until the
+- * driver supports the internal reference clock.
++ * PCIe0: QCA6174 Wi-Fi/BT module (Gen1). No external oscillator on this port:
++ * the PHY runs from the internal CCM 100 MHz reference (REF_USE_PAD = 0) and
++ * the module's REFCLK is driven by the ANAMIX PLLOUT monitor output
++ * (SYS_PLL1 800 MHz / 8) on the GPIO1_IO00 pad, as the Google kernel does
++ * with ext_osc = 0.
+  */
+ &pcie0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_pcie0>;
+ 	reset-gpio = <&gpio3 10 GPIO_ACTIVE_LOW>;
++	clocks = <&clk IMX8MQ_CLK_PCIE1_ROOT>,
++		 <&clk IMX8MQ_CLK_MON_CLK2_OUT>,
++		 <&clk IMX8MQ_CLK_PCIE1_PHY>,
++		 <&clk IMX8MQ_CLK_PCIE1_AUX>;
++	assigned-clocks = <&clk IMX8MQ_CLK_PCIE1_CTRL>,
++			  <&clk IMX8MQ_CLK_PCIE1_PHY>,
++			  <&clk IMX8MQ_CLK_PCIE1_AUX>,
++			  <&clk IMX8MQ_CLK_MON_SEL>,
++			  <&clk IMX8MQ_CLK_MON_SYS_PLL1_DIV>;
++	assigned-clock-parents = <&clk IMX8MQ_SYS2_PLL_250M>,
++				 <&clk IMX8MQ_SYS2_PLL_100M>,
++				 <&clk IMX8MQ_SYS1_PLL_80M>,
++				 <&clk IMX8MQ_CLK_MON_SYS_PLL1_DIV>;
++	assigned-clock-rates = <250000000>, <100000000>, <10000000>,
++			       <0>, <100000000>;
++	fsl,refclk-pad-mode = <IMX8_PCIE_REFCLK_PAD_UNUSED>;
+ 	vpcie-supply = <&reg_wlan>;
+ 	vph-supply = <&ldo7>;
+ 	fsl,max-link-speed = <1>;
+-	status = "disabled";
++	status = "okay";
+ };
+ 
+ /* PCIe1: on-SoM Edge TPU (1ac1:089a), external 100 MHz refclk, Gen2 */
+@@ -437,6 +454,8 @@ pinctrl_pcie0: pcie0grp {
+ 			MX8MQ_IOMUXC_I2C4_SCL_PCIE1_CLKREQ_B		0x76
+ 			MX8MQ_IOMUXC_NAND_DATA05_GPIO3_IO11		0x16
+ 			MX8MQ_IOMUXC_NAND_DATA04_GPIO3_IO10		0x16
++			/* ANAMIX PLLOUT (CLK2) -> Wi-Fi module REFCLK */
++			MX8MQ_IOMUXC_GPIO1_IO00_ANAMIX_REF_CLK_32K	0x05
+ 		>;
+ 	};
+ 
+diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+index f7a2eb257..5f975f7b6 100644
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -18,6 +18,7 @@
+ #include <linux/mfd/syscon/imx7-iomuxc-gpr.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
++#include <dt-bindings/phy/phy-imx8-pcie.h>
+ #include <linux/of_address.h>
+ #include <linux/pci.h>
+ #include <linux/pci-pwrctrl.h>
+@@ -446,11 +447,23 @@ static int pcie_phy_write(struct imx_pcie *imx_pcie, int addr, u16 data)
+ 
+ static int imx8mq_pcie_init_phy(struct imx_pcie *imx_pcie)
+ {
+-	/* TODO: This code assumes external oscillator is being used */
++	struct device *dev = imx_pcie->pci->dev;
++	u32 pad_mode = IMX8_PCIE_REFCLK_PAD_INPUT;
++
++	/*
++	 * By default the PHY reference clock is taken from the REFCLK pads,
++	 * fed by an external oscillator. Boards may instead run the PHY from
++	 * the internal (CCM) 100 MHz reference and provide the endpoint clock
++	 * by other means (e.g. the ANAMIX PLLOUT pin); they declare this with
++	 * fsl,refclk-pad-mode = <IMX8_PCIE_REFCLK_PAD_UNUSED>, as the
++	 * i.MX8MM/8MP PCIe PHY binding does.
++	 */
++	of_property_read_u32(dev->of_node, "fsl,refclk-pad-mode", &pad_mode);
+ 	regmap_update_bits(imx_pcie->iomuxc_gpr,
+ 			   imx_pcie_grp_offset(imx_pcie),
+ 			   IMX8MQ_GPR_PCIE_REF_USE_PAD,
+-			   IMX8MQ_GPR_PCIE_REF_USE_PAD);
++			   pad_mode == IMX8_PCIE_REFCLK_PAD_INPUT ?
++			   IMX8MQ_GPR_PCIE_REF_USE_PAD : 0);
+ 	/*
+ 	 * Per the datasheet, the PCIE_VPH is suggested to be 1.8V.  If the
+ 	 * PCIE_VPH is supplied by 3.3V, the VREG_BYPASS should be cleared
+-- 
+2.43.0
+

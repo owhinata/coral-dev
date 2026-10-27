@@ -1,0 +1,128 @@
+From 918915df55bc6314001a6e1d06ba080f31f7383f Mon Sep 17 00:00:00 2001
+From: "Katsumi.Ouwa" <d2p.yggdrasill@gmail.com>
+Date: Tue, 27 Oct 2026 12:54:14 +0900
+Subject: [PATCH 1/7] arm64: dts: imx8mq-phanbell: add PCIe root ports for Edge
+ TPU and Wi-Fi
+
+---
+ .../boot/dts/freescale/imx8mq-phanbell.dts    | 83 +++++++++++++++++++
+ 1 file changed, 83 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+index e34045d10..9b3b21598 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+@@ -28,6 +28,13 @@ pmic_osc: clock-pmic {
+ 		clock-output-names = "pmic_osc";
+ 	};
+ 
++	pcie_refclk: clock-pcie-refclk {
++		compatible = "fixed-clock";
++		#clock-cells = <0>;
++		clock-frequency = <100000000>;
++		clock-output-names = "pcie_refclk";
++	};
++
+ 	reg_usdhc2_vmmc: regulator-usdhc2-vmmc {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "VSD_3V3";
+@@ -37,6 +44,32 @@ reg_usdhc2_vmmc: regulator-usdhc2-vmmc {
+ 		enable-active-high;
+ 	};
+ 
++	/* Edge TPU (Apex) PMIC enable; always on, 500 ms power-up (Google DT: reg_apex) */
++	reg_apex: regulator-apex {
++		compatible = "regulator-fixed";
++		regulator-name = "apex_regulators";
++		regulator-min-microvolt = <1000000>;
++		regulator-max-microvolt = <1000000>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_reg_apex>;
++		gpio = <&gpio3 15 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		gpio-open-drain;
++		regulator-always-on;
++		startup-delay-us = <500000>;
++	};
++
++	/* QCA6174 WL_REG_ON (Google DT: pcie0 disable-gpio) */
++	reg_wlan: regulator-wlan {
++		compatible = "regulator-fixed";
++		regulator-name = "wl_regon";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		gpio = <&gpio3 11 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		startup-delay-us = <10000>;
++	};
++
+ 	fan: gpio-fan {
+ 		compatible = "gpio-fan";
+ 		gpio-fan,speed-map = <0 0>, <8600 1>;
+@@ -307,6 +340,35 @@ &usdhc2 {
+ 	status = "okay";
+ };
+ 
++/*
++ * PCIe0: QCA6174 Wi-Fi/BT module (Gen1). The Google kernel drives the PHY from
++ * the internal PLL (ext_osc = 0); mainline imx8mq_pcie_init_phy() assumes an
++ * external oscillator, so this port is experimental.
++ */
++&pcie0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pcie0>;
++	reset-gpio = <&gpio3 10 GPIO_ACTIVE_LOW>;
++	vpcie-supply = <&reg_wlan>;
++	vph-supply = <&ldo7>;
++	fsl,max-link-speed = <1>;
++	status = "okay";
++};
++
++/* PCIe1: on-SoM Edge TPU (1ac1:089a), external 100 MHz refclk, Gen2 */
++&pcie1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pcie1>;
++	reset-gpio = <&gpio3 18 GPIO_ACTIVE_LOW>;
++	clocks = <&clk IMX8MQ_CLK_PCIE2_ROOT>,
++		 <&pcie_refclk>,
++		 <&clk IMX8MQ_CLK_PCIE2_PHY>,
++		 <&clk IMX8MQ_CLK_PCIE2_AUX>;
++	vph-supply = <&ldo7>;
++	fsl,max-link-speed = <2>;
++	status = "okay";
++};
++
+ &usb3_phy0 {
+ 	status = "okay";
+ };
+@@ -366,6 +428,27 @@ MX8MQ_IOMUXC_I2C1_SDA_I2C1_SDA			0x4000007f
+ 		>;
+ 	};
+ 
++	pinctrl_pcie0: pcie0grp {
++		fsl,pins = <
++			MX8MQ_IOMUXC_I2C4_SCL_PCIE1_CLKREQ_B		0x76
++			MX8MQ_IOMUXC_NAND_DATA05_GPIO3_IO11		0x16
++			MX8MQ_IOMUXC_NAND_DATA04_GPIO3_IO10		0x16
++		>;
++	};
++
++	pinctrl_pcie1: pcie1grp {
++		fsl,pins = <
++			MX8MQ_IOMUXC_I2C4_SDA_PCIE2_CLKREQ_B		0x76
++			MX8MQ_IOMUXC_NAND_WP_B_GPIO3_IO18		0x19
++		>;
++	};
++
++	pinctrl_reg_apex: regapexgrp {
++		fsl,pins = <
++			MX8MQ_IOMUXC_NAND_RE_B_GPIO3_IO15		0x19
++		>;
++	};
++
+ 	pinctrl_pmic: pmicirqgrp {
+ 		fsl,pins = <
+ 			MX8MQ_IOMUXC_GPIO1_IO03_GPIO1_IO3	0x41
+-- 
+2.43.0
+
