@@ -3,6 +3,8 @@
 Build, deploy and one-shot boot of a mainline kernel (with Edge TPU and Wi-Fi) on the
 Coral Dev Board while keeping the Mendel rootfs and U-Boot untouched.
 Full write-up: `docs/ja/technical/linux_mainline_port.md` / `docs/en/technical/linux_mainline_port.md`.
+The Debian 13 rootfs migration, including scripts and backup procedures, is documented in
+`docs/ja/technical/debian13_migration.md` / `docs/en/technical/debian13_migration.md`.
 
 ```bash
 git clone --depth 1 --branch v7.3 https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git kernel/linux

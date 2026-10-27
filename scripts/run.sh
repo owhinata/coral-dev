@@ -5,6 +5,7 @@
 #
 # Environment variables:
 #   CORAL_IP  IP address (optional, auto-detected via mdt if empty)
+#   CORAL_QUIET  Set to 1 to suppress the status line (e.g. for binary output)
 #
 # Usage: run.sh <command>
 set -euo pipefail
@@ -23,5 +24,7 @@ IP=$("$SCRIPT_DIR/resolve-ip.sh")
 
 SSH_OPTS=(-i "$MDT_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=5)
 
-echo "Running on Coral Dev Board (${IP}): ${CMD}"
+if [ "${CORAL_QUIET:-0}" != 1 ]; then
+    echo "Running on Coral Dev Board (${IP}): ${CMD}"
+fi
 ssh "${SSH_OPTS[@]}" "mendel@${IP}" "${CMD}"

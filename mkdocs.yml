@@ -60,6 +60,7 @@ nav:
   - 技術情報:
       - technical/display_image.md
       - technical/linux_mainline_port.md
+      - technical/debian13_migration.md
 
 markdown_extensions:
   - admonition
