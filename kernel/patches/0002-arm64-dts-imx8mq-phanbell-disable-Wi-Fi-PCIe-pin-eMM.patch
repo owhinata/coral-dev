@@ -1,0 +1,85 @@
+From 1fce0e1652abcdbcc9ce5be73d611e9e034a12dd Mon Sep 17 00:00:00 2001
+From: "Katsumi.Ouwa" <d2p.yggdrasill@gmail.com>
+Date: Tue, 27 Oct 2026 13:39:42 +0900
+Subject: [PATCH 2/7] arm64: dts: imx8mq-phanbell: disable Wi-Fi PCIe, pin eMMC
+ to HS200, add no-PCIe variant
+
+---
+ arch/arm64/boot/dts/freescale/Makefile             |  1 +
+ .../boot/dts/freescale/imx8mq-phanbell-nopcie.dts  | 14 ++++++++++++++
+ arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts  | 12 ++++++++----
+ 3 files changed, 23 insertions(+), 4 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/freescale/imx8mq-phanbell-nopcie.dts
+
+diff --git a/arch/arm64/boot/dts/freescale/Makefile b/arch/arm64/boot/dts/freescale/Makefile
+index 95ae85ab4..06358d855 100644
+--- a/arch/arm64/boot/dts/freescale/Makefile
++++ b/arch/arm64/boot/dts/freescale/Makefile
+@@ -561,6 +561,7 @@ dtb-$(CONFIG_ARCH_MXC) += imx8mq-tqma8mq-mba8mx.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-mnt-reform2.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-nitrogen.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-phanbell.dtb
++dtb-$(CONFIG_ARCH_MXC) += imx8mq-phanbell-nopcie.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-pico-pi.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-thor96.dtb
+ dtb-$(CONFIG_ARCH_MXC) += imx8mq-zii-ultra-rmb3.dtb
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-phanbell-nopcie.dts b/arch/arm64/boot/dts/freescale/imx8mq-phanbell-nopcie.dts
+new file mode 100644
+index 000000000..4670029a0
+--- /dev/null
++++ b/arch/arm64/boot/dts/freescale/imx8mq-phanbell-nopcie.dts
+@@ -0,0 +1,14 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Coral Dev Board (Phanbell) bring-up variant: both PCIe root ports disabled.
++ * Used as a baseline to validate the rest of the platform on mainline.
++ */
++#include "imx8mq-phanbell.dts"
++
++&pcie0 {
++	status = "disabled";
++};
++
++&pcie1 {
++	status = "disabled";
++};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+index 9b3b21598..d073489d2 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+@@ -326,6 +326,8 @@ &usdhc1 {
+ 	pinctrl-2 = <&pinctrl_usdhc1_200mhz>;
+ 	bus-width = <8>;
+ 	non-removable;
++	/* HS400 tuning is intermittent on mainline (CMD21 -EILSEQ); stay at HS200 for now. */
++	no-mmc-hs400;
+ 	status = "okay";
+ };
+ 
+@@ -341,9 +343,11 @@ &usdhc2 {
+ };
+ 
+ /*
+- * PCIe0: QCA6174 Wi-Fi/BT module (Gen1). The Google kernel drives the PHY from
+- * the internal PLL (ext_osc = 0); mainline imx8mq_pcie_init_phy() assumes an
+- * external oscillator, so this port is experimental.
++ * PCIe0: QCA6174 Wi-Fi/BT module (Gen1). The Google kernel drives this PHY from
++ * the internal PLL (ext_osc = 0), but mainline imx8mq_pcie_init_phy() assumes
++ * an external oscillator (REF_USE_PAD). Enabling this port on Linux 7.3 hangs
++ * the system during PCIe probe (AXI stall), so keep it disabled until the
++ * driver supports the internal reference clock.
+  */
+ &pcie0 {
+ 	pinctrl-names = "default";
+@@ -352,7 +356,7 @@ &pcie0 {
+ 	vpcie-supply = <&reg_wlan>;
+ 	vph-supply = <&ldo7>;
+ 	fsl,max-link-speed = <1>;
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ /* PCIe1: on-SoM Edge TPU (1ac1:089a), external 100 MHz refclk, Gen2 */
+-- 
+2.43.0
+

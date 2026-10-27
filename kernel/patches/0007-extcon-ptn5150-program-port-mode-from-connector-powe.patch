@@ -1,0 +1,96 @@
+From 22d93af46ff1e148ee1fcffb0266ab136370547d Mon Sep 17 00:00:00 2001
+From: "Katsumi.Ouwa" <d2p.yggdrasill@gmail.com>
+Date: Tue, 27 Oct 2026 15:38:52 +0900
+Subject: [PATCH 7/7] extcon: ptn5150: program port mode from connector
+ power-role; arm64: dts: imx8mq-phanbell: fix USB gadget (UFP role,
+ dis_u3_susphy_quirk)
+
+---
+ .../boot/dts/freescale/imx8mq-phanbell.dts    | 14 +++++++++
+ drivers/extcon/extcon-ptn5150.c               | 31 +++++++++++++++++++
+ 2 files changed, 45 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+index 2e388c8ff..4aadfac92 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts
+@@ -422,6 +422,14 @@ typec_ptn5150: typec@3d {
+ 		pinctrl-0 = <&pinctrl_typec>;
+ 		interrupt-parent = <&gpio3>;
+ 		interrupts = <0 IRQ_TYPE_EDGE_FALLING>;
++
++		/* The chip is strapped as DFP; the port is used as a USB device (mdt). */
++		connector {
++			compatible = "usb-c-connector";
++			label = "USB-C";
++			power-role = "sink";
++			data-role = "device";
++		};
+ 	};
+ };
+ 
+@@ -432,6 +440,12 @@ typec_ptn5150: typec@3d {
+  */
+ &usb_dwc3_0 {
+ 	dr_mode = "peripheral";
++	/*
++	 * With the USB3 PHY allowed to suspend (GUSB3PIPECTL.SUSPHY) the device
++	 * never attaches to the host; the Google kernel keeps the same bit set
++	 * but its dwc3 behaves differently, so disable it here.
++	 */
++	snps,dis_u3_susphy_quirk;
+ 	status = "okay";
+ };
+ 
+diff --git a/drivers/extcon/extcon-ptn5150.c b/drivers/extcon/extcon-ptn5150.c
+index eca1b140a..c6b22edc5 100644
+--- a/drivers/extcon/extcon-ptn5150.c
++++ b/drivers/extcon/extcon-ptn5150.c
+@@ -24,6 +24,11 @@
+ #define PTN5150_REG_DEVICE_ID			0x01
+ #define PTN5150_REG_CONTROL			0x02
+ #define PTN5150_REG_INT_STATUS			0x03
++/* PTN5150_REG_CONTROL */
++#define PTN5150_REG_CONTROL_PORT_MODE		GENMASK(2, 1)
++#define PTN5150_PORT_MODE_UFP			0
++#define PTN5150_PORT_MODE_DFP			1
++#define PTN5150_PORT_MODE_DRP			2
+ #define PTN5150_REG_CC_STATUS			0x04
+ #define PTN5150_REG_CON_DET			0x09
+ #define PTN5150_REG_VCONN_STATUS		0x0a
+@@ -345,6 +350,32 @@ static int ptn5150_i2c_probe(struct i2c_client *i2c)
+ 
+ 	connector = device_get_named_child_node(dev, "connector");
+ 	if (connector) {
++		const char *role;
++
++		/*
++		 * Program the port mode from the connector's power-role. The
++		 * power-on default is set by strap pins and is not necessarily
++		 * what the board wants (e.g. a device-only port strapped as DFP).
++		 */
++		if (!fwnode_property_read_string(connector, "power-role", &role)) {
++			unsigned int mode;
++
++			if (!strcmp(role, "sink"))
++				mode = PTN5150_PORT_MODE_UFP;
++			else if (!strcmp(role, "source"))
++				mode = PTN5150_PORT_MODE_DFP;
++			else
++				mode = PTN5150_PORT_MODE_DRP;
++
++			ret = regmap_update_bits(info->regmap, PTN5150_REG_CONTROL,
++						 PTN5150_REG_CONTROL_PORT_MODE,
++						 FIELD_PREP(PTN5150_REG_CONTROL_PORT_MODE, mode));
++			if (ret)
++				dev_err(info->dev, "failed to set port mode: %d\n", ret);
++			else
++				dev_info(info->dev, "port mode set to %s\n", role);
++		}
++
+ 		info->orient_sw = fwnode_typec_switch_get(connector);
+ 		if (IS_ERR(info->orient_sw))
+ 			return dev_err_probe(info->dev, PTR_ERR(info->orient_sw),
+-- 
+2.43.0
+

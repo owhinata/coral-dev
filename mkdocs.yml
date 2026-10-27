@@ -59,6 +59,7 @@ nav:
       - development/pycoral_examples.md
   - 技術情報:
       - technical/display_image.md
+      - technical/linux_mainline_port.md
 
 markdown_extensions:
   - admonition

@@ -18,3 +18,12 @@ toolchain/
 
 # OS
 .DS_Store
+
+# Linux kernel / driver sources and build output (large, not tracked)
+kernel/linux/
+kernel/gasket-driver/
+kernel/google-dts/
+kernel/mainline-dts/
+kernel/out/
+kernel/firmware-dl/
+kernel/boot/boot.scr
