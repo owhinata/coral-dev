@@ -14,7 +14,12 @@ cleanup() { if mountpoint -q /mnt/home-inspect; then umount /mnt/home-inspect ||
 trap cleanup EXIT
 test "$(stat -c '%u:%g' /mnt/home-inspect/mendel)" = 1000:1000
 cmp /home/mendel/.ssh/authorized_keys /mnt/home-inspect/mendel/.ssh/authorized_keys
-rsync -aHAX --numeric-ids --ignore-existing /home/ /mnt/home-inspect/
+if [[ -e /mnt/home-inspect/mendel/.venvs/pycoral ]]; then
+  echo 'Preserving the existing SD-card PyCoral venv without merging it.'
+  rsync -aHAX --numeric-ids --ignore-existing --exclude='/mendel/.venvs/pycoral/***' /home/ /mnt/home-inspect/
+else
+  rsync -aHAX --numeric-ids --ignore-existing /home/ /mnt/home-inspect/
+fi
 sync
 umount /mnt/home-inspect
 cp -a /etc/fstab /etc/fstab.before-home-sd
