@@ -1,0 +1,1399 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Google Coral Dev Board セットアップ・使い方ガイド">
+      
+      
+      
+        <link rel="canonical" href="https://owhinata.github.io/coral-dev/pr-preview/pr-9/technical/linux_mainline_port/">
+      
+      
+        <link rel="prev" href="../display_image/">
+      
+      
+        <link rel="next" href="../debian13_migration/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="ja">
+        
+          <link rel="alternate" href="../../en/technical/linux_mainline_port/" hreflang="en">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Mainline Linux 7.3 への移植 - Coral Dev Board Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mainline-linux-73" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="Coral Dev Board Guide" class="md-header__button md-logo" aria-label="Coral Dev Board Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Coral Dev Board Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mainline Linux 7.3 への移植
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="orange" data-md-color-accent="orange"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="orange"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="言語切り替え">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../en/technical/linux_mainline_port/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/owhinata/coral-dev" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="タブ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Coral Dev Board Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../setup/getting_started/" class="md-tabs__link">
+          
+  
+  
+  セットアップ
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../development/hello_world/" class="md-tabs__link">
+          
+  
+  
+  開発
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../display_image/" class="md-tabs__link">
+          
+  
+  
+  技術情報
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Coral Dev Board Guide" class="md-nav__button md-logo" aria-label="Coral Dev Board Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Coral Dev Board Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/owhinata/coral-dev" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coral Dev Board Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    セットアップ
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    セットアップ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    セットアップガイド
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/sd_home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    /home を SD カードに移行する
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    開発
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    開発
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/hello_world/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello World
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/coremark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CoreMark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/pycoral_benchmark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    pycoral ベンチマーク
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/pycoral_examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyCoral API Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技術情報
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技術情報
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../display_image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    画像の表示
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mainline Linux 7.3 への移植
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mainline Linux 7.3 への移植
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        結果
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        作業ディレクトリ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        手順
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="手順">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. ビルド
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. デプロイ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-73" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 既定のカーネルを 7.3 にする
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 手動での 1 回限りの起動（検証用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        調査結果
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="調査結果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#device-tree-pcie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Tree: PCIe が存在しない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wi-fi-pcie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wi-Fi PCIe の内部リファレンスクロック
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ath10k-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ath10k のボードデータと MAC アドレス
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gasket-apex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        gasket / apex ドライバ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usb-otg-mdt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        USB OTG ポート（mdt 用ガジェット）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        再起動が固まる
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emmc-hs400" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        eMMC HS400
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        未解決の課題
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debian13_migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coral Dev Board を Debian 13 に移行する
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="mainline-linux-73">Mainline Linux 7.3 への移植<a class="headerlink" href="#mainline-linux-73" title="Permanent link">&para;</a></h1>
+<p>Coral Dev Board（初代、i.MX 8MQ / Phanbell）で Mainline Linux 7.3 を起動し、内蔵 Edge TPU と Wi-Fi を動作させた記録です。
+Mendel Linux 5.3 (Eagle) の rootfs と U-Boot はそのまま使い、カーネル・DTB・モジュールだけを差し替えています。</p>
+<h2 id="_1">結果<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>Mendel (4.14.98-imx)</th>
+<th>Mainline 7.3.0-imx-coral+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>起動（eMMC rootfs、systemd、ログイン）</td>
+<td>OK</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>Edge TPU (PCIe 1ac1:089a)</td>
+<td>Gen2 x1、apex/gasket</td>
+<td>Gen2 x1、apex/gasket（外部モジュール）</td>
+</tr>
+<tr>
+<td>PyCoral classify_image.py (parrot.jpg)</td>
+<td>Scarlet Macaw 0.75781、2nd 3.37 ms</td>
+<td>Scarlet Macaw 0.75781、2nd 2.85 ms</td>
+</tr>
+<tr>
+<td>mobilenet_v2 1000 回連続推論</td>
+<td>-</td>
+<td>3.15 ms/回、出力不一致 0、2 回の再起動後も同一</td>
+</tr>
+<tr>
+<td>Wi-Fi (QCA6174)</td>
+<td>Qualcomm 独自ドライバ</td>
+<td>ath10k、AP 接続、mdt/SSH 到達</td>
+</tr>
+<tr>
+<td>USB OTG ガジェット (mdt)</td>
+<td>OK</td>
+<td>OK（super-speed、mdt 検出。要パッチ）</td>
+</tr>
+<tr>
+<td>eMMC</td>
+<td>HS400</td>
+<td>HS200（HS400 チューニングが不安定なため固定）</td>
+</tr>
+<tr>
+<td>再起動 (<code>reboot</code>)</td>
+<td>OK</td>
+<td>OK（WDOG 経由。要パッチ）</td>
+</tr>
+<tr>
+<td>GPU / VPU / HDMI</td>
+<td>OK</td>
+<td>未対応（Weston 起動失敗）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">作業ディレクトリ<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>リポジトリの <code>kernel/</code> に一式があります。ソースツリー（<code>kernel/linux</code>、<code>kernel/gasket-driver</code>）とビルド出力は <code>.gitignore</code> 対象です。</p>
+<table>
+<thead>
+<tr>
+<th>ファイル</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kernel/docker/Dockerfile</code></td>
+<td>クロスビルド環境（Ubuntu 24.04 + gcc-aarch64-linux-gnu）。Mendel 向け ARM GNU 8.3 は Linux 7.x をビルドできない</td>
+</tr>
+<tr>
+<td><code>kernel/coral.config</code></td>
+<td>arm64 defconfig にマージする Kconfig フラグメント</td>
+</tr>
+<tr>
+<td><code>kernel/build.sh</code></td>
+<td><code>config</code> / <code>kernel</code> / <code>gasket</code> / <code>install</code> をコンテナ内で実行</td>
+</tr>
+<tr>
+<td><code>kernel/deploy.sh</code></td>
+<td>Image・DTB・モジュールをボードへ配置（既存ファイルは変更しない）</td>
+</tr>
+<tr>
+<td><code>kernel/uboot-boot.py</code></td>
+<td>シリアル経由で U-Boot を操作し、新カーネルを 1 回だけ起動して起動ログを記録</td>
+</tr>
+<tr>
+<td><code>kernel/boot/boot.cmd</code>、<code>kernel/install-bootscr.sh</code></td>
+<td>既定起動を Mainline にする U-Boot スクリプト（Mendel フォールバック付き）とその導入</td>
+</tr>
+<tr>
+<td><code>kernel/patches/</code></td>
+<td>Mainline と gasket-driver への差分</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">手順<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1">1. ビルド<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>--branch<span class="w"> </span>v7.3<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git<span class="w"> </span>kernel/linux
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span>https://github.com/google/gasket-driver.git<span class="w"> </span>kernel/gasket-driver
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="o">(</span><span class="nb">cd</span><span class="w"> </span>kernel/linux<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>am<span class="w"> </span>../patches/00*.patch<span class="o">)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="o">(</span><span class="nb">cd</span><span class="w"> </span>kernel/gasket-driver<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>apply<span class="w"> </span>../patches/gasket-driver-linux-7.3.patch<span class="o">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>kernel/build.sh<span class="w"> </span>image<span class="w">     </span><span class="c1"># Docker イメージ作成</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>kernel/build.sh<span class="w"> </span>all<span class="w">       </span><span class="c1"># config + Image/modules/dtbs + gasket + モジュールステージング</span>
+</code></pre></div>
+<p><code>CONFIG_LOCALVERSION="-imx-coral"</code> にしているのは、Mendel の <code>/usr/bin/usb-gadget-start.sh</code> が <code>uname -r</code> に <code>imx</code> を含むかで機種判定しているためです。</p>
+<h3 id="2">2. デプロイ<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kernel/deploy.sh
+</code></pre></div>
+<p><code>/boot/Image-&lt;ver&gt;</code>、<code>/boot/imx8mq-phanbell-&lt;ver&gt;.dtb</code>、<code>/lib/modules/&lt;ver&gt;/</code> に配置します。
+<code>/boot/Image</code> のシンボリックリンク（Mendel カーネル）と Mendel の DTB はそのまま残します。</p>
+<h3 id="3-73">3. 既定のカーネルを 7.3 にする<a class="headerlink" href="#3-73" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kernel/install-bootscr.sh
+</code></pre></div>
+<p><code>kernel/boot/boot.cmd</code> を <code>mkimage</code> で <code>boot.scr</code> にして <code>/boot/boot.scr</code> を置き換えます（元の boot.scr は <code>/boot/boot.scr.mendel-orig</code> に保存）。
+新しいスクリプトは <code>Image-7.3.0-imx-coral+</code> と対応する DTB を読み込めれば Mainline を、読み込めなければ従来の Mendel の起動手順（baseboardid による DTB 選択、overlays.txt、M4）にフォールバックします。
+Mendel に戻すには <code>/boot/boot.scr.mendel-orig</code> を <code>/boot/boot.scr</code> にコピーするか、<code>Image-7.3.0-imx-coral+</code> をリネームします。</p>
+<p>ボードは eMMC ブート（<code>/</code> = mmcblk0p2、<code>/boot</code> = mmcblk0p1）で、SD カード（mmcblk1）は <code>/home</code> にのみ使われています。</p>
+<h3 id="4-1">4. 手動での 1 回限りの起動（検証用）<a class="headerlink" href="#4-1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kernel/uboot-boot.py<span class="w"> </span>--version<span class="w"> </span><span class="m">7</span>.3.0-imx-coral+<span class="w"> </span>--port<span class="w"> </span>/dev/ttyUSB0<span class="w"> </span>--reboot<span class="w"> </span>--linger<span class="w"> </span><span class="m">60</span>
+</code></pre></div>
+<p>U-Boot の autoboot を中断し、以下を実行します。Mendel の U-Boot 環境は CRC エラーでデフォルト値になっており <code>fdt_addr</code> が未定義なため、アドレスは明示します。
+Mainline の Image は約 51 MB あり、Mendel が使う DTB アドレス 0x43000000 と重なるので DTB は 0x48000000 に置きます。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ext2load mmc 0:1 0x40480000 Image-7.3.0-imx-coral+
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ext2load mmc 0:1 0x48000000 imx8mq-phanbell-7.3.0-imx-coral+.dtb
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>setenv bootargs console=ttymxc0,115200 earlycon=ec_imx6q,0x30860000,115200 root=PARTUUID=&lt;rootfs&gt; rootfstype=ext4 rw rootwait net.ifnames=0 sysrq_always_enabled panic=10
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>booti 0x40480000 - 0x48000000
+</code></pre></div>
+<h2 id="_4">調査結果<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="device-tree-pcie">Device Tree: PCIe が存在しない<a class="headerlink" href="#device-tree-pcie" title="Permanent link">&para;</a></h3>
+<p>Mainline の <code>arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts</code> には PCIe ノードが一切なく、Edge TPU も Wi-Fi も有効になりません。
+Google 版 DT（<code>fsl-imx8mq-som.dtsi</code>）との差分から以下を追加しました（<code>patches/0001</code>、<code>0002</code>、<code>0003</code>）。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>Google 版</th>
+<th>Mainline 向け実装</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edge TPU (PCIe1 @33c00000)</td>
+<td><code>ext_osc = &lt;1&gt;</code>、<code>reset-gpio</code> gpio3 18、<code>vph-supply</code> LDO7</td>
+<td><code>pcie_bus</code> クロックを 100 MHz <code>fixed-clock</code> に、<code>reset-gpio</code>/<code>vph-supply</code> は同じ</td>
+</tr>
+<tr>
+<td>Edge TPU 電源</td>
+<td><code>reg_apex</code> (gpio3 15、always-on、500 ms)</td>
+<td><code>regulator-fixed</code> として同内容を移植</td>
+</tr>
+<tr>
+<td>Wi-Fi (PCIe0 @33800000)</td>
+<td><code>ext_osc = &lt;0&gt;</code>、<code>disable-gpio</code> gpio3 11 (WL_REG_ON)、<code>reset-gpio</code> gpio3 10</td>
+<td>下記「内部 refclk」参照。WL_REG_ON は <code>regulator-fixed</code> + <code>vpcie-supply</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="wi-fi-pcie">Wi-Fi PCIe の内部リファレンスクロック<a class="headerlink" href="#wi-fi-pcie" title="Permanent link">&para;</a></h3>
+<p>Google 版ドライバは <code>ext_osc = 0</code> のとき、PHY を CCM 内部の 100 MHz で駆動し（GPR14 <code>REF_USE_PAD = 0</code>）、Wi-Fi モジュール向けの REFCLK を ANAMIX PLLOUT（SYS_PLL1 800 MHz ÷ 8）から GPIO1_IO00 ピンに出力します。
+Mainline の <code>imx8mq_pcie_init_phy()</code> は外部オシレータ前提で <code>REF_USE_PAD</code> を無条件に立てるため、PHY が無クロックになり、レジスタアクセスで AXI バスが停止してシステム全体がハングしました（起動ログは iATU 検出直後で停止）。</p>
+<p>対策（<code>patches/0003</code>）:</p>
+<ul>
+<li><code>pci-imx6.c</code>: i.MX8MM/8MP の PHY バインディングと同じ <code>fsl,refclk-pad-mode</code> を読み、<code>IMX8_PCIE_REFCLK_PAD_UNUSED</code> なら <code>REF_USE_PAD</code> を 0 にする。未指定時は従来動作。</li>
+<li>DTS: <code>pcie_bus</code> に Mainline 既存のクロック <code>IMX8MQ_CLK_MON_CLK2_OUT</code> を指定し、<code>assigned-clocks</code> で <code>IMX8MQ_CLK_MON_SEL</code> → <code>IMX8MQ_CLK_MON_SYS_PLL1_DIV</code> (100 MHz) を設定。ピンマルチプレクサに <code>MX8MQ_IOMUXC_GPIO1_IO00_ANAMIX_REF_CLK_32K</code> を追加。</li>
+</ul>
+<h3 id="ath10k-mac">ath10k のボードデータと MAC アドレス<a class="headerlink" href="#ath10k-mac" title="Permanent link">&para;</a></h3>
+<ul>
+<li>linux-firmware の <code>board-2.bin</code> には本機のサブシステム ID (0000:0000) のエントリが無く、汎用 <code>board.bin</code> にフォールバックすると初期化直後から <code>wmi command timeout</code> が連続します。
+  Mendel 同梱の Qualcomm 用ボードデータ <code>/lib/firmware/bdwlan30.bin</code> を <code>/lib/firmware/ath10k/QCA6174/hw3.0/board.bin</code> にコピーすると解消しました（元ファイルは <code>board.bin.mendel-orig</code> として保存。Mendel 自身は使用しません）。</li>
+<li>ath10k は OTP の MAC (<code>e8:e8:b7:…</code>) を使いますが、Mendel の NetworkManager プロファイルは Google 割当の MAC (<code>7c:d9:5c:…</code>) に紐づいています。
+  DTS の PCIe0 ルートポート配下に <code>wifi@0,0</code> ノードを置き <code>local-mac-address</code> で渡すことで自動接続するようになりました（<code>patches/0005</code>、ボード固有値）。</li>
+</ul>
+<h3 id="gasket-apex">gasket / apex ドライバ<a class="headerlink" href="#gasket-apex" title="Permanent link">&para;</a></h3>
+<p>google/gasket-driver（2024-04 時点）を Linux 7.3 向け外部モジュールとしてビルドするには 3 点の修正が必要です（<code>patches/gasket-driver-linux-7.3.patch</code>）。</p>
+<table>
+<thead>
+<tr>
+<th>変更</th>
+<th>カーネル</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.llseek = no_llseek</code> の削除</td>
+<td>6.12 で <code>no_llseek</code> 廃止</td>
+</tr>
+<tr>
+<td><code>MODULE_IMPORT_NS("DMA_BUF")</code> （文字列化）</td>
+<td>6.13</td>
+</tr>
+<tr>
+<td><code>zap_vma_ptes()</code> → <code>zap_special_vma_range()</code></td>
+<td>7.1 で改名（同じ引数）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="usb-otg-mdt">USB OTG ポート（mdt 用ガジェット）<a class="headerlink" href="#usb-otg-mdt" title="Permanent link">&para;</a></h3>
+<p>3 つの問題が重なっていました（<code>patches/0004</code>、<code>0005</code>、<code>0007</code>）。</p>
+<ol>
+<li><strong>Mendel のガジェットスクリプトの機種判定</strong>: <code>usb-gadget-start.sh</code> は <code>uname -r</code> に <code>imx</code> を含むかで判定するため、<code>CONFIG_LOCALVERSION="-imx-coral"</code> にしました。</li>
+<li><strong>Type-C のロール</strong>: PTN5150（CC ロジック）はストラップで DFP（ホスト）になっており、Mainline ドライバは CONTROL レジスタを書き換えないため、PC 側がデバイスになって VBUS も供給されませんでした。Google ドライバは起動時に DRP → UFP を設定しています。
+   Mainline の <code>extcon-ptn5150.c</code> に、<code>connector</code> 子ノードの <code>power-role</code>（<code>sink</code> → UFP、<code>source</code> → DFP、<code>dual</code> → DRP）からポートモードを設定する処理を追加し、DTS に <code>connector { power-role = "sink"; data-role = "device"; }</code> を置きました。dwc3 は <code>dr_mode = "peripheral"</code> に固定しています。</li>
+<li><strong>dwc3 の USB3 PHY サスペンド</strong>: 上記を直しても dwc3 がイベントを一切受け取らず（GEVNTCOUNT = 0、リンク状態 SS.Disabled）、ホストはプルアップを検出しませんでした。Mendel と dwc3/PHY のレジスタを比較しても差は僅かでしたが、<code>snps,dis_u3_susphy_quirk</code>（GUSB3PIPECTL.SUSPHY を立てない）で接続するようになりました。<code>snps,dis_u2_susphy_quirk</code> 単独では接続しません。</li>
+</ol>
+<h3 id="_5">再起動が固まる<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>Mainline では <code>reboot: Restarting system</code> の直後で停止します。PSCI SYSTEM_RESET が戻ってこないためです。
+Mendel カーネルでも PSCI を使いますが、シャットダウン時に imx2-wdt が稼働中（<code>Device shutdown: Expect reboot!</code>）で 1 秒後に WDOG がリセットするため問題が見えません。
+imx2-wdt の restart ハンドラ優先度を PSCI (129) より高い 192 にして WDOG で再起動するようにしました（<code>patches/0006</code>）。</p>
+<h3 id="emmc-hs400">eMMC HS400<a class="headerlink" href="#emmc-hs400" title="Permanent link">&para;</a></h3>
+<p>HS400 のチューニングが起動ごとに成功・失敗（<code>mmc_select_hs400 failed, error -84</code>）し、失敗時は rootfs が見つからず <code>rootwait</code> で止まります。<code>usdhc1</code> に <code>no-mmc-hs400</code> を付けて HS200 に固定しています。</p>
+<h2 id="_6">未解決の課題<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>GPU (etnaviv)・VPU・HDMI 出力（Weston）</li>
+<li>snvs RTC の probe 失敗 (-110)</li>
+<li>eMMC HS400</li>
+<li><code>fsl,refclk-pad-mode</code>、PTN5150 のポートモード設定、WDOG 優先度変更の upstream 向け整理</li>
+</ul>
+<h2 id="_7">参考<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Google 版カーネル: <a href="https://coral.googlesource.com/linux-imx/">coral/linux-imx</a>（<code>arch/arm64/boot/dts/freescale/fsl-imx8mq-som.dtsi</code>、<code>drivers/pci/dwc/pci-imx6.c</code>）</li>
+<li>Mainline: <a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dts?h=v7.3">imx8mq-phanbell.dts (v7.3)</a>、<a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pci-imx6.c?h=v7.3">pci-imx6.c (v7.3)</a></li>
+<li><a href="https://github.com/google/gasket-driver">google/gasket-driver</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>
