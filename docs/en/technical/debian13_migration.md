@@ -16,7 +16,17 @@ This records the migration of an original i.MX 8MQ / Phanbell Coral Dev Board fr
 | Edge TPU / PyCoral | Inference as a normal user through `/dev/apex_0` verified |
 | Time | `systemd-timesyncd` used because the RTC does not work |
 
-USB gadget services started, but mdt over USB was not tested. C++ TensorFlow Lite development libraries and headers are not installed. PyCoral uses Python 3.7 and older libraries copied from Mendel: run it with `python3-pycoral`; the default `python3` remains Debian's Python 3.13. Python 3.7 is end-of-life.
+USB gadget services started, but mdt over USB was not tested. C++ TensorFlow Lite development libraries and headers are not installed. PyCoral uses Python 3.7 and older libraries copied from Mendel. On the current board, run `source ~/.venvs/pycoral/bin/activate` and use `python`; Debian's system `python3` remains at version 3.13. Python 3.7 is end-of-life.
+
+The migration script creates the venv and pip in `/home/mendel/.venvs/pycoral`. It copies Python packages and native libraries from Mendel and downloads pip over the network. To use it on the board:
+
+```bash
+source ~/.venvs/pycoral/bin/activate
+python -c 'import ssl, numpy, PIL.Image, pycoral, tflite_runtime'
+python -m pip --version
+```
+
+Run `deactivate` when finished. The copied packages were not installed through pip and are not managed by it.
 
 ## Prerequisites
 
@@ -66,7 +76,7 @@ sudo kernel/debian13/write-sd.sh --write <sd-device> <recovery.img> \
   kernel/out/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dtb
 ```
 
-This command erases the selected disk. Power off, insert the trial card, set the switches to SD mode (1 ON, 2 OFF, 3 ON, 4 ON), and monitor the serial console during boot. Verify Wi-Fi, SSH, `mdt devices`, and inference using `python3-pycoral` and a real model. APT signature checks may fail until the clock synchronizes.
+This command erases the selected disk. Power off, insert the trial card, set the switches to SD mode (1 ON, 2 OFF, 3 ON, 4 ON), and monitor the serial console during boot. Verify Wi-Fi, SSH, `mdt devices`, and inference with a real model using `python` in the activated venv. APT signature checks may fail until the clock synchronizes.
 
 ## 3. Back up eMMC to the PC
 
@@ -105,7 +115,7 @@ CORAL_DEPLOY_DIR=/home/mendel/debian13-build scripts/deploy.sh \
   kernel/debian13/restore-home.sh:restore-home.sh
 ```
 
-Log into the board and run the commands below. Existing SD files are not overwritten; new files from the eMMC `/home` are copied. If the SSH keys differ, the script stops so they can be reviewed and merged manually.
+Log into the board and run the commands below. Existing SD files are not overwritten; new files from the eMMC `/home` are copied. If a PyCoral venv already exists on the SD, it is preserved without merging. If the SSH keys differ, the script stops so they can be reviewed and merged manually.
 
 ```bash
 sudo bash /home/mendel/debian13-build/restore-home.sh --mount-home

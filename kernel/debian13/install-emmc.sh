@@ -35,7 +35,8 @@ mkdir -p "$target"/{boot,dev,proc,sys,run,tmp,mnt,media}
 chmod 1777 "$target/tmp"
 printf '%s\n' 'PARTUUID=70672ec3-5eee-49ff-b3b1-eb1fbd406bf5 / ext4 defaults,noatime 0 1' 'UUID=7b4cfc91-9ee8-487d-88ca-2966f21ba005 /boot ext2 defaults,noatime 0 2' > "$target/etc/fstab"
 sync
-test -e "$target/usr/local/bin/python3-pycoral"
+test -f "$target/home/mendel/.venvs/pycoral/bin/activate"
+test -f "$target/home/mendel/.venvs/pycoral/lib/python3.7/site-packages/pycoral/__init__.py"
 test -e "$target/etc/avahi/services/mdt.service"
 test -e "$target/lib/modules/7.3.0-imx-coral+/modules.dep"
 umount "$target"

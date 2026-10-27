@@ -16,7 +16,17 @@
 | Edge TPU / PyCoral | `/dev/apex_0` を一般ユーザーで利用し、推論を確認 |
 | 時刻 | RTC が動作しないため `systemd-timesyncd` を使用 |
 
-USB gadget のサービスは起動しましたが、USB 経由の mdt 接続は未検証です。C++ 開発用 TensorFlow Lite とヘッダーは未導入です。PyCoral は Mendel からコピーした Python 3.7 と古いライブラリで動かします。Debian の `python3` は 3.13 のままで、PyCoral の実行には `python3-pycoral` を使います。Python 3.7 は保守終了済みです。
+USB gadget のサービスは起動しましたが、USB 経由の mdt 接続は未検証です。C++ 開発用 TensorFlow Lite とヘッダーは未導入です。PyCoral は Mendel からコピーした Python 3.7 と古いライブラリで動かします。現在のボードでは `source ~/.venvs/pycoral/bin/activate` で venv を有効にして `python` を実行します。Debian のシステム `python3` は 3.13 のままです。Python 3.7 は保守終了済みです。
+
+移行スクリプトは `/home/mendel/.venvs/pycoral` に venv と pip を作成します。Python パッケージとネイティブライブラリを Mendel からコピーし、pip はネットワークから取得します。利用時はボード上で次を実行します。
+
+```bash
+source ~/.venvs/pycoral/bin/activate
+python -c 'import ssl, numpy, PIL.Image, pycoral, tflite_runtime'
+python -m pip --version
+```
+
+終了時は `deactivate` を実行します。コピーされたパッケージは pip の管理対象としてインストールされたものではありません。
 
 ## 前提
 
@@ -66,7 +76,7 @@ sudo kernel/debian13/write-sd.sh --write <sd-device> <recovery.img> \
   kernel/out/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dtb
 ```
 
-このコマンドは指定ディスクを消去します。書き込み後に電源を切り、試験用 SD を挿入してスイッチを SD モード（1 ON・2 OFF・3 ON・4 ON）にし、シリアルログを監視しながら起動します。Wi-Fi、SSH、`mdt devices`、`python3-pycoral` と実際のモデルでの推論を確認してください。時刻同期が完了するまでは APT の署名確認に失敗することがあります。
+このコマンドは指定ディスクを消去します。書き込み後に電源を切り、試験用 SD を挿入してスイッチを SD モード（1 ON・2 OFF・3 ON・4 ON）にし、シリアルログを監視しながら起動します。Wi-Fi、SSH、`mdt devices`、venv を有効にした `python` と実際のモデルでの推論を確認してください。時刻同期が完了するまでは APT の署名確認に失敗することがあります。
 
 ## 3. eMMC を PC にバックアップ
 
@@ -105,7 +115,7 @@ CORAL_DEPLOY_DIR=/home/mendel/debian13-build scripts/deploy.sh \
   kernel/debian13/restore-home.sh:restore-home.sh
 ```
 
-ボードにログインして実行します。既存のファイルは上書きせず、eMMC `/home` の新規ファイルだけを SD に追加します。SSH 鍵が異なる場合は停止するので、内容を確認してから手動で統合してください。
+ボードにログインして実行します。既存のファイルは上書きせず、eMMC `/home` の新規ファイルだけを SD に追加します。SD に PyCoral venv が既にある場合は統合せず、そのまま残します。SSH 鍵が異なる場合は停止するので、内容を確認してから手動で統合してください。
 
 ```bash
 sudo bash /home/mendel/debian13-build/restore-home.sh --mount-home

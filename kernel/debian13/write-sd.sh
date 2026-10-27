@@ -27,7 +27,7 @@ cleanup() {
 trap cleanup EXIT
 mkdir "$work/boot" "$work/root"
 tar -tf "$root_tar" > "$work/archive-files"
-for required in '(^|/)usr/local/bin/python3-pycoral$' '(^|/)etc/avahi/services/mdt.service$' '(^|/)lib/modules/7[.]3[.]0-imx-coral[+]/modules.dep$'; do
+for required in '(^|/)home/mendel/[.]venvs/pycoral/bin/activate$' '(^|/)home/mendel/[.]venvs/pycoral/lib/python3[.]7/site-packages/pycoral/__init__[.]py$' '(^|/)etc/avahi/services/mdt.service$' '(^|/)lib/modules/7[.]3[.]0-imx-coral[+]/modules.dep$'; do
   grep -Eq "$required" "$work/archive-files" || { echo "Rootfs archive is missing $required" >&2; exit 1; }
 done
 dd if="$recovery" of="$dev" bs=4M conv=fsync status=progress
