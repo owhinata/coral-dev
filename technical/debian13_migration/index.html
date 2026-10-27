@@ -1021,7 +1021,13 @@
 </tr>
 </tbody>
 </table>
-<p>USB gadget のサービスは起動しましたが、USB 経由の mdt 接続は未検証です。C++ 開発用 TensorFlow Lite とヘッダーは未導入です。PyCoral は Mendel からコピーした Python 3.7 と古いライブラリで動かします。Debian の <code>python3</code> は 3.13 のままで、PyCoral の実行には <code>python3-pycoral</code> を使います。Python 3.7 は保守終了済みです。</p>
+<p>USB gadget のサービスは起動しましたが、USB 経由の mdt 接続は未検証です。C++ 開発用 TensorFlow Lite とヘッダーは未導入です。PyCoral は Mendel からコピーした Python 3.7 と古いライブラリで動かします。現在のボードでは <code>source ~/.venvs/pycoral/bin/activate</code> で venv を有効にして <code>python</code> を実行します。Debian のシステム <code>python3</code> は 3.13 のままです。Python 3.7 は保守終了済みです。</p>
+<p>移行スクリプトは <code>/home/mendel/.venvs/pycoral</code> に venv と pip を作成します。Python パッケージとネイティブライブラリを Mendel からコピーし、pip はネットワークから取得します。利用時はボード上で次を実行します。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">source</span><span class="w"> </span>~/.venvs/pycoral/bin/activate
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'import ssl, numpy, PIL.Image, pycoral, tflite_runtime'</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>--version
+</code></pre></div>
+<p>終了時は <code>deactivate</code> を実行します。コピーされたパッケージは pip の管理対象としてインストールされたものではありません。</p>
 <h2 id="_2">前提<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li>シリアルコンソール、電源を切って交換できる <strong>試験用 SD カード</strong>（8 GB 以上）と既存の <code>/home</code> 用 SD カード。</li>
@@ -1032,53 +1038,53 @@
 </ul>
 <h2 id="1-debian-13-rootfs">1. Debian 13 rootfs を準備<a class="headerlink" href="#1-debian-13-rootfs" title="Permanent link">&para;</a></h2>
 <p>PC で arm64 ベースを取得し、元の Mendel ボードに転送します。イメージ取得にネットワークが必要です。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>build
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>debian:13
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>docker<span class="w"> </span>create<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>--name<span class="w"> </span>coral-debian13-base<span class="w"> </span>debian:13
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-o<span class="w"> </span>build/debian13-arm64-base.tar<span class="w"> </span>coral-debian13-base
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>docker<span class="w"> </span>rm<span class="w"> </span>coral-debian13-base
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nv">CORAL_DEPLOY_DIR</span><span class="o">=</span>/home/mendel/debian13-build<span class="w"> </span>scripts/deploy.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>build/debian13-arm64-base.tar:base.tar<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>kernel/debian13/prepare-rootfs.sh:prepare-rootfs.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>build
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>pull<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>debian:13
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>docker<span class="w"> </span>create<span class="w"> </span>--platform<span class="w"> </span>linux/arm64<span class="w"> </span>--name<span class="w"> </span>coral-debian13-base<span class="w"> </span>debian:13
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>docker<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-o<span class="w"> </span>build/debian13-arm64-base.tar<span class="w"> </span>coral-debian13-base
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>docker<span class="w"> </span>rm<span class="w"> </span>coral-debian13-base
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nv">CORAL_DEPLOY_DIR</span><span class="o">=</span>/home/mendel/debian13-build<span class="w"> </span>scripts/deploy.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>build/debian13-arm64-base.tar:base.tar<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>kernel/debian13/prepare-rootfs.sh:prepare-rootfs.sh
 </code></pre></div>
 <p>ボードに <code>mdt shell</code> などでログインし、以下を実行します。出力先は存在しないディレクトリにしてください。失敗時の途中ファイルは自動削除しません。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>bash<span class="w"> </span>/home/mendel/debian13-build/prepare-rootfs.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>/home/mendel/debian13-build/base.tar<span class="w"> </span>/home/mendel/debian13-build/rootfs
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>bash<span class="w"> </span>/home/mendel/debian13-build/prepare-rootfs.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>/home/mendel/debian13-build/base.tar<span class="w"> </span>/home/mendel/debian13-build/rootfs
 </code></pre></div>
 <p>ボードのパスワード、SSH 公開鍵、NetworkManager 接続設定、Wi-Fi ファームウェア、カーネルモジュール、mdt サービス、PyCoral 関連ファイルを rootfs にコピーします。接続設定などの秘密情報を含むため、rootfs と次の tar は慎重に扱ってください。</p>
 <p>PC 側で rootfs を取得します。sudo のパスワードは端末から入力し、保存しません。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kernel/debian13/export-rootfs.sh<span class="w"> </span>/home/mendel/debian13-build/rootfs<span class="w"> </span>build/debian13-rootfs.tar
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kernel/debian13/export-rootfs.sh<span class="w"> </span>/home/mendel/debian13-build/rootfs<span class="w"> </span>build/debian13-rootfs.tar
 </code></pre></div>
 <h2 id="2-sd">2. 試験用 SD カードを作成して起動<a class="headerlink" href="#2-sd" title="Permanent link">&para;</a></h2>
 <p><a href="https://coral.ai/docs/dev-board/reflash/">Coral の公式フラッシュパッケージ</a>から <code>recovery.img</code> を取り出します。PC で <code>lsblk</code> を使って試験用 SD のデバイスを特定し、全パーティションをアンマウントしてください。以下の <code>&lt;sd-device&gt;</code> は<strong>消去してよいカード全体</strong>（例: <code>/dev/sda</code>）です。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>kernel/debian13/write-sd.sh<span class="w"> </span>--write<span class="w"> </span>&lt;sd-device&gt;<span class="w"> </span>&lt;recovery.img&gt;<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>build/debian13-rootfs.tar<span class="w"> </span>kernel/out/arch/arm64/boot/Image<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>kernel/out/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dtb
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>kernel/debian13/write-sd.sh<span class="w"> </span>--write<span class="w"> </span>&lt;sd-device&gt;<span class="w"> </span>&lt;recovery.img&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>build/debian13-rootfs.tar<span class="w"> </span>kernel/out/arch/arm64/boot/Image<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>kernel/out/arch/arm64/boot/dts/freescale/imx8mq-phanbell.dtb
 </code></pre></div>
-<p>このコマンドは指定ディスクを消去します。書き込み後に電源を切り、試験用 SD を挿入してスイッチを SD モード（1 ON・2 OFF・3 ON・4 ON）にし、シリアルログを監視しながら起動します。Wi-Fi、SSH、<code>mdt devices</code>、<code>python3-pycoral</code> と実際のモデルでの推論を確認してください。時刻同期が完了するまでは APT の署名確認に失敗することがあります。</p>
+<p>このコマンドは指定ディスクを消去します。書き込み後に電源を切り、試験用 SD を挿入してスイッチを SD モード（1 ON・2 OFF・3 ON・4 ON）にし、シリアルログを監視しながら起動します。Wi-Fi、SSH、<code>mdt devices</code>、venv を有効にした <code>python</code> と実際のモデルでの推論を確認してください。時刻同期が完了するまでは APT の署名確認に失敗することがあります。</p>
 <h2 id="3-emmc-pc">3. eMMC を PC にバックアップ<a class="headerlink" href="#3-emmc-pc" title="Permanent link">&para;</a></h2>
 <p>試験用 SD から起動中に PC で実行します。保存先は存在しないディレクトリを指定します。sudo パスワードを入力すると、eMMC 本体とブート領域 0・1 をそれぞれ圧縮し、展開後のバイト数とチェックサムを検証します。バックアップには個人情報が含まれます。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>kernel/debian13/backup-emmc.sh<span class="w"> </span>backups/emmc-before-debian13
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kernel/debian13/backup-emmc.sh<span class="w"> </span>backups/emmc-before-debian13
 </code></pre></div>
 <p>今回のバックアップは <code>backups/emmc-before-debian13/</code> にあり、<code>SHA256SUMS</code> で再検査できます。これは eMMC のバックアップです。別の <code>/home</code> 用 SD カードのデータは含みません。復元には試験用 SD などで起動し、対象デバイスとブート領域の書き込み保護を確認する必要があります。</p>
 <h2 id="4-emmc">4. eMMC に移行<a class="headerlink" href="#4-emmc" title="Permanent link">&para;</a></h2>
 <p>バックアップの成功と試験起動を確認したうえで、PC からスクリプトを転送します。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">CORAL_DEPLOY_DIR</span><span class="o">=</span>/home/mendel/debian13-build<span class="w"> </span>scripts/deploy.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>kernel/debian13/install-emmc.sh:install-emmc.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">CORAL_DEPLOY_DIR</span><span class="o">=</span>/home/mendel/debian13-build<span class="w"> </span>scripts/deploy.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>kernel/debian13/install-emmc.sh:install-emmc.sh
 </code></pre></div>
 <p>試験用 SD で起動中のボードにログインし、実行します。この操作は eMMC の rootfs を初期化します。既存の eMMC <code>/boot</code> を読み取り専用で確認し、カーネル・DTB が試験用 SD と一致する場合のみ進みます。パーティションテーブルと eMMC の U-Boot は書き換えません。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>bash<span class="w"> </span>/home/mendel/debian13-build/install-emmc.sh<span class="w"> </span>--write-emmc
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>poweroff
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>bash<span class="w"> </span>/home/mendel/debian13-build/install-emmc.sh<span class="w"> </span>--write-emmc
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>poweroff
 </code></pre></div>
 <p>電源を外し、eMMC モード（1 ON・2 OFF・3 OFF・4 OFF）に戻して起動します。<code>findmnt /</code>、<code>findmnt /boot</code>、<code>mdt devices</code> と PyCoral 推論を確認します。試験用 SD は切り戻し用に保管できます。</p>
 <h2 id="5-home-sd">5. 元の <code>/home</code> 用 SD を戻す<a class="headerlink" href="#5-home-sd" title="Permanent link">&para;</a></h2>
 <p>安全に電源を切って元の SD カードに交換し、eMMC モードで起動します。<code>lsblk -f</code> で UUID を確認し、PC から転送します。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">CORAL_DEPLOY_DIR</span><span class="o">=</span>/home/mendel/debian13-build<span class="w"> </span>scripts/deploy.sh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>kernel/debian13/restore-home.sh:restore-home.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">CORAL_DEPLOY_DIR</span><span class="o">=</span>/home/mendel/debian13-build<span class="w"> </span>scripts/deploy.sh<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>kernel/debian13/restore-home.sh:restore-home.sh
 </code></pre></div>
-<p>ボードにログインして実行します。既存のファイルは上書きせず、eMMC <code>/home</code> の新規ファイルだけを SD に追加します。SSH 鍵が異なる場合は停止するので、内容を確認してから手動で統合してください。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>bash<span class="w"> </span>/home/mendel/debian13-build/restore-home.sh<span class="w"> </span>--mount-home
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>reboot
+<p>ボードにログインして実行します。既存のファイルは上書きせず、eMMC <code>/home</code> の新規ファイルだけを SD に追加します。SD に PyCoral venv が既にある場合は統合せず、そのまま残します。SSH 鍵が異なる場合は停止するので、内容を確認してから手動で統合してください。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>bash<span class="w"> </span>/home/mendel/debian13-build/restore-home.sh<span class="w"> </span>--mount-home
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>reboot
 </code></pre></div>
 <p>再起動後に <code>findmnt /home</code> と元のデータ、SSH、推論を確認します。元の <code>fstab</code> は <code>/etc/fstab.before-home-sd</code> に保存されます。</p>
 <p>今回の実機作業では同等の手順を検証しましたが、ここに残した再実行用スクリプトは整理後に最初からの移行を再実行していません。</p>
